@@ -1,6 +1,10 @@
 import { SERVER_URL } from "./settings";
 import fetchData from "./utils/fetchData";
 
+function fetchSearchResults(query, setSearchResults, mounted) {
+    fetchData(`${SERVER_URL}/api/search/${query}`, "GET", setSearchResults, mounted);
+}
+
 function fetchWikipedia(setArticles, mounted) {
     fetchData(`${SERVER_URL}/api/info/sequential`, "GET", setArticles, mounted);
 }
@@ -22,6 +26,7 @@ function fetchAdminPage(setContent, mounted) {
 }
 
 const apiFacade = {
+    fetchSearchResults,
     fetchWikipedia,
     fetchDadJokes,
     fetchFunStuff,
