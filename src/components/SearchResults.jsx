@@ -21,7 +21,9 @@ function SearchResults({ results }) {
 
     return (
         <div>
-            <p>Results: {results.numFound}</p>
+            {results.numFound > 0
+                ? <p>Results: {results.numFound}</p>
+                : <p>No results</p>}
             <ListGroup>
                 {results.results.map(r => <SingleResult key={results.key} result={r} />)}
             </ListGroup>
