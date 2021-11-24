@@ -1,17 +1,18 @@
 import { useRef, useState } from "react"
 import { Button, Form, FormControl, InputGroup } from "react-bootstrap";
 import SearchResults from "../components/SearchResults";
-import apiFacade from "../apiFacade";
+import { Route, Routes, useNavigate } from "react-router";
 
 export default function Home() {
     const [searchResults, setSearchResults] = useState();
     const mounted = useRef(true);
+    const navigate = useNavigate();
 
     function search(event) {
         event.preventDefault();
         const query = event.target.search.value;
         if (query) {
-            apiFacade.fetchSearchResults(query, setSearchResults, mounted);
+            navigate(`search/${query}`);
         }
     }
 
@@ -23,6 +24,8 @@ export default function Home() {
                 <Button type="submit">Search</Button>
             </InputGroup>
         </Form>
-        <SearchResults results={searchResults} />
+        <Routes>
+            <Route path="/search/:query" element={<SearchResults />} />
+        </Routes>
     </>
 }

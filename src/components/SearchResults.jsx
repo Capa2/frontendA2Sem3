@@ -1,6 +1,12 @@
+import { useEffect, useRef, useState } from "react";
 import { Image, ListGroup, ListGroupItem } from "react-bootstrap";
+import { useParams } from "react-router";
+import apiFacade from "../apiFacade";
 
-function SearchResults({ results }) {
+function SearchResults() {
+    const [searchResults, setSearchResults] = useState();
+    const { query } = useParams();
+    const mounted = useRef(true);
 
     function SingleResult({ result }) {
         return (
@@ -15,17 +21,25 @@ function SearchResults({ results }) {
         )
     }
 
-    if (!results) {
+    useEffect(() => {
+        return () => mounted.current = false;
+    }, []);
+
+    useEffect(() => {
+        apiFacade.fetchSearchResults(query, setSearchResults, mounted);
+    }, [query])
+
+    if (!searchResults) {
         return null;
     }
 
     return (
         <div>
-            {results.numFound > 0
-                ? <p>Results: {results.numFound}</p>
+            {searchResults.numFound > 0
+                ? <p>Results: {searchResults.numFound}</p>
                 : <p>No results</p>}
             <ListGroup>
-                {results.results.map(r => <SingleResult key={r.key} result={r} />)}
+                {searchResults.results.map(r => <SingleResult key={r.key} result={r} />)}
             </ListGroup>
         </div>
     );
