@@ -3,9 +3,8 @@ import { Image, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useParams } from "react-router";
 import apiFacade from "../apiFacade";
 
-function SearchResults() {
+function SearchResults({ query }) {
     const [searchResults, setSearchResults] = useState();
-    const { query } = useParams();
     const mounted = useRef(true);
 
     function SingleResult({ result }) {
