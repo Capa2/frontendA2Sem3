@@ -49,8 +49,7 @@ export default function App() {
       <NavBar loggedIn={loggedInState} user={userState} />
       <Container className="pageContent pt-3 pb-3" fluid="sm">
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/search/*" element={<HomePage />} />
+          <Route path="/*" element={<HomePage />} />
           <Route path="/wikipedia" element={<WikipediaPage />} />
           <Route path="/dadjokes" element={<DadJokePage />} />
           <Route path="/funstuff" element={<FunStuffPage />} />
