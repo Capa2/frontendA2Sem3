@@ -9,6 +9,7 @@ import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import WikipediaPage from "./pages/WikipediaPage";
 import DadJokePage from "./pages/DadJokePage";
+import ResultPage from "./pages/ResultPage";
 import UserPage from "./pages/UserPage";
 import AdminPage from "./pages/AdminPage";
 import NoMatchPage from "./pages/NoMatchPage";
@@ -56,6 +57,7 @@ export default function App() {
           <Route path="/user" element={<UserPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/result" element={<ResultPage />} />
           <Route path="/login" element={<LoginPage login={loginProtocol} />} />
           <Route path="/logout" element={<LogoutPage logout={logoutProtocol} />} />
           <Route path="*" element={<NoMatchPage />} />
