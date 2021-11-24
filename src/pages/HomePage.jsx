@@ -10,7 +10,9 @@ export default function Home() {
     function search(event) {
         event.preventDefault();
         const query = event.target.search.value;
-        apiFacade.fetchSearchResults(query, setSearchResults, mounted);
+        if (query) {
+            apiFacade.fetchSearchResults(query, setSearchResults, mounted);
+        }
     }
 
     return <>
