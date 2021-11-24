@@ -23,7 +23,7 @@ function SearchResults({ results }) {
         <div>
             <p>Results: {results.numFound}</p>
             <ListGroup>
-                {results.results.map(r => <SingleResult result={r} />)}
+                {results.results.map(r => <SingleResult key={results.key} result={r} />)}
             </ListGroup>
         </div>
     );
