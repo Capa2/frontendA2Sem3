@@ -25,7 +25,7 @@ export default function Home() {
             </InputGroup>
         </Form>
         <Routes>
-            <Route path="/search/:query" element={<SearchResults />} />
+            <Route path=":query" element={<SearchResults />} />
         </Routes>
     </>
 }
