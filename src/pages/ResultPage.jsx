@@ -9,7 +9,7 @@ function ResultPage() {
 function SingleResult({ result }) {
     return (
         <ListGroupItem>
-            <Image src={result.thumbnail_urls[1]} className="float-start me-2" thumbnail />
+            {/* <Image src={result.thumbnail_urls[1]} className="float-start me-2" thumbnail /> */}
             <h2>{result.title}</h2>
                 <p>by: {result.authors.map((a, i) => [i > 0 && ", ", <a href="#" key={a.key}>{a.name}</a>])}</p>
                 <p>First published in: {result.first_publish_year}</p>
