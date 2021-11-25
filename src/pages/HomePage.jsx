@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Button, ButtonGroup, Dropdown, Form, FormControl, FormSelect, InputGroup } from "react-bootstrap";
+import { Button, Form, FormControl, FormSelect, InputGroup, Row } from "react-bootstrap";
 import SearchResults from "../components/SearchResults";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
@@ -15,11 +15,6 @@ export default function Home() {
         const key = event.target.name;
         const value = event.target.value;
         setSearch({ ...search, [key]: value });
-    }
-
-    function changeSearchType(event) {
-        const newType = event.target.value;
-        setSearch({ ...search, "type": newType });
     }
 
     function performSearch(event) {
@@ -38,15 +33,37 @@ export default function Home() {
     function getQueryString() {
         const { type, query } = queryObject;
         const res = (type ? type + ":" : "") + query;
-        console.log(res);
         return res;
     }
 
     return <>
         <h1>Home</h1>
+
         <Form className="mb-3" onSubmit={performSearch}>
             <InputGroup>
-                <FormControl name="query" type="text" value={search.query ? search.query : ""} onChange={handleChange} placeholder="Search for books" />
+                <FormControl
+                    className="w-66"
+                    name="query"
+                    type="text"
+                    value={search.query ? search.query : ""}
+                    size="lg"
+                    onChange={handleChange}
+                    placeholder="Search"
+                />
+                <Form.Select
+                    name="type"
+                    defaultValue={search.type}
+                    size="lg"
+                    aria-label="search select"
+                    onChange={handleChange}
+                >
+                    {/* The empty value is to use the API's generic search as opposed to forcing it to match title. */}
+                    <option value="">book</option>
+                    <option value="author">author</option>
+                </Form.Select>
+                <Button type="submit">Search</Button>
+                {/*  
+                !! This seems needlessly complicated and hides away critical information from the user !!
                 <Dropdown as={ButtonGroup}>
                     <Button type="submit">Search</Button>
                     <Dropdown.Toggle split />
@@ -55,11 +72,12 @@ export default function Home() {
                         <Dropdown.Item as="button" value="author">Author</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
-                <InputGroup.Text>{search.type}</InputGroup.Text>
+                <InputGroup.Text>{searchType}</InputGroup.Text>
+                */}
             </InputGroup>
         </Form>
         {queryObject.query &&
-            <SearchResults query={getQueryString()} />
+            <Row><SearchResults query={getQueryString()} /></Row>
         }
     </>
 }
