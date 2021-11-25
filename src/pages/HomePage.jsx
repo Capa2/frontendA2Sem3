@@ -1,28 +1,40 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { Button, Form, FormControl, InputGroup } from "react-bootstrap";
 import SearchResults from "../components/SearchResults";
-import apiFacade from "../apiFacade";
+import { useNavigate } from "react-router";
+import { useSearchParams } from "react-router-dom";
 
 export default function Home() {
-    const [searchResults, setSearchResults] = useState();
-    const mounted = useRef(true);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const query = searchParams.get("query");
+    const [search, setSearch] = useState(!!query ? query : "");
+    // ^ search could just initialise as query, but then it gives an annoying error message in console because the controlled value goes from undefined to defined.
+    const navigate = useNavigate();
 
-    function search(event) {
+    function handleChange(event) {
+        setSearch(event.target.value);
+    }
+
+    function performSearch(event) {
         event.preventDefault();
-        const query = event.target.search.value;
-        if (query) {
-            apiFacade.fetchSearchResults(query, setSearchResults, mounted);
+        if (search) {
+            navigate({
+                pathname: "search",
+                search: `query=${search}`
+            });
         }
     }
 
     return <>
         <h1>Home</h1>
-        <Form className="mb-3" onSubmit={search}>
+        <Form className="mb-3" onChange={handleChange} onSubmit={performSearch}>
             <InputGroup>
-                <FormControl name="search" type="text" placeholder="Search for books" />
+                <FormControl name="search" type="text" value={search} placeholder="Search for books" />
                 <Button type="submit">Search</Button>
             </InputGroup>
         </Form>
-        <SearchResults results={searchResults} />
+        {query &&
+            <SearchResults query={query} />
+        }
     </>
 }
