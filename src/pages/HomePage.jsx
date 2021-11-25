@@ -1,16 +1,14 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { Button, Form, FormControl, InputGroup } from "react-bootstrap";
 import SearchResults from "../components/SearchResults";
-import { Route, Routes, useNavigate } from "react-router";
-import { createSearchParams, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router";
+import { useSearchParams } from "react-router-dom";
 
 export default function Home() {
     const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get("query");
     const [search, setSearch] = useState(!!query ? query : "");
     // ^ search could just initialise as query, but then it gives an annoying error message in console because the controlled value goes from undefined to defined.
-    const [searchResults, setSearchResults] = useState();
-    const mounted = useRef(true);
     const navigate = useNavigate();
 
     function handleChange(event) {

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { Image, ListGroup, ListGroupItem } from "react-bootstrap";
-import { useParams } from "react-router";
 import apiFacade from "../apiFacade";
 
 function SearchResults({ query }) {
