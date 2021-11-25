@@ -27,9 +27,9 @@ export default function Home() {
 
     return <>
         <h1>Home</h1>
-        <Form className="mb-3" onChange={handleChange} onSubmit={performSearch}>
+        <Form className="mb-3" onSubmit={performSearch}>
             <InputGroup>
-                <FormControl name="search" type="text" value={search} placeholder="Search for books" />
+                <FormControl name="search" type="text" value={search} onChange={handleChange} placeholder="Search for books" />
                 <Button type="submit">Search</Button>
             </InputGroup>
         </Form>
