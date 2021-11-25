@@ -5,33 +5,37 @@ import { Route, Routes, useNavigate } from "react-router";
 import { createSearchParams, useSearchParams } from "react-router-dom";
 
 export default function Home() {
+    const [searchParams, setSearchParams] = useSearchParams();
+    const query = searchParams.get("query");
+    const [search, setSearch] = useState(query);
     const [searchResults, setSearchResults] = useState();
     const mounted = useRef(true);
     const navigate = useNavigate();
-    const [searchParams, setSearchParams] = useSearchParams();
-    const queryParam = searchParams.get("query");
 
-    function search(event) {
+    function handleChange(event) {
+        setSearch(event.target.value);
+    }
+
+    function performSearch(event) {
         event.preventDefault();
-        const query = event.target.search.value;
-        if (query) {
+        if (search) {
             navigate({
                 pathname: "search",
-                search: `query=${query}`
+                search: `query=${search}`
             });
         }
     }
 
     return <>
         <h1>Home</h1>
-        <Form className="mb-3" onSubmit={search}>
+        <Form className="mb-3" onChange={handleChange} onSubmit={performSearch}>
             <InputGroup>
-                <FormControl name="search" type="text" value={queryParam} placeholder="Search for books" />
+                <FormControl name="search" type="text" value={search} placeholder="Search for books" />
                 <Button type="submit">Search</Button>
             </InputGroup>
         </Form>
-        {queryParam &&
-            <SearchResults query={queryParam} />
+        {query &&
+            <SearchResults query={query} />
         }
     </>
 }
