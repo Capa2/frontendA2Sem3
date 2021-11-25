@@ -89,3 +89,7 @@
     .loginForm {
         max-width: 400px;
     }
+
+    .w-66 {
+        width:66% !important;
+    }

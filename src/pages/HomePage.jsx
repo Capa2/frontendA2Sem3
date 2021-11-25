@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Button, Form, FormControl, InputGroup } from "react-bootstrap";
+import { Button, Form, FormControl, InputGroup, Row, Col } from "react-bootstrap";
 import SearchResults from "../components/SearchResults";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
@@ -27,14 +27,29 @@ export default function Home() {
 
     return <>
         <h1>Home</h1>
+
         <Form className="mb-3" onSubmit={performSearch}>
             <InputGroup>
-                <FormControl name="search" type="text" value={search} onChange={handleChange} placeholder="Search for books" />
+                <FormControl
+                    className="w-66"
+                    name="search"
+                    type="text"
+                    value={search}
+                    onChange={handleChange}
+                    placeholder="Search"
+                />
+                <Form.Select 
+                    size="lg"
+                    aria-label="search select"
+                >
+                    <option value="book">book</option>
+                    <option value="author">author</option>
+                </Form.Select>
                 <Button type="submit">Search</Button>
             </InputGroup>
         </Form>
         {query &&
-            <SearchResults query={query} />
+            <row><SearchResults query={query} /></row>
         }
     </>
 }
