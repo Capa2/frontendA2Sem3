@@ -33,9 +33,17 @@ export default function Home() {
 
     return <>
         <h1>Home</h1>
+
         <Form className="mb-3" onSubmit={performSearch}>
             <InputGroup>
-                <FormControl name="search" type="text" value={search} onChange={handleChange} placeholder="Search for books" />
+                <FormControl
+                    className="w-66"
+                    name="search"
+                    type="text"
+                    value={search}
+                    onChange={handleChange}
+                    placeholder="Search"
+                />
                 <Dropdown as={ButtonGroup}>
                     <Button type="submit">Search</Button>
                     <Dropdown.Toggle split />
@@ -48,7 +56,7 @@ export default function Home() {
             </InputGroup>
         </Form>
         {query &&
-            <SearchResults query={query} />
+            <row><SearchResults query={query} /></row>
         }
     </>
 }
