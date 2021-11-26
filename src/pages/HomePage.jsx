@@ -62,6 +62,7 @@ export default function Home() {
                     <option value="">none</option>
                     <option value="title">book</option>
                     <option value="author">author</option>
+                    <option value="subject">subject</option>
                 </FormSelect> </FloatingLabel>
                 <Button type="submit">Search</Button>
                 {/*  
