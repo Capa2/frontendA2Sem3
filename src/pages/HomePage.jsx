@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Button, Form, FormControl, FormSelect, InputGroup, Row } from "react-bootstrap";
+import { Button, Form, FormControl, FormSelect, InputGroup, Row, FloatingLabel } from "react-bootstrap";
 import SearchResults from "../components/SearchResults";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
@@ -50,17 +50,19 @@ export default function Home() {
                     onChange={handleChange}
                     placeholder="Search"
                 />
+                <FloatingLabel controlId="floatingFilter" label="Filter">
                 <FormSelect
                     name="type"
                     defaultValue={search.type}
                     size="lg"
                     aria-label="search select"
                     onChange={handleChange}
-                >
+                >     
                     {/* The empty value is to use the API's generic search as opposed to forcing it to match title. */}
-                    <option value="">book</option>
+                    <option value="">none</option>
+                    <option value="title">book</option>
                     <option value="author">author</option>
-                </FormSelect>
+                </FormSelect> </FloatingLabel>
                 <Button type="submit">Search</Button>
                 {/*  
                 !! This seems needlessly complicated and hides away critical information from the user !!
