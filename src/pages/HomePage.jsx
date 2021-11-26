@@ -50,7 +50,7 @@ export default function Home() {
                     onChange={handleChange}
                     placeholder="Search"
                 />
-                <Form.Select
+                <FormSelect
                     name="type"
                     defaultValue={search.type}
                     size="lg"
@@ -60,7 +60,7 @@ export default function Home() {
                     {/* The empty value is to use the API's generic search as opposed to forcing it to match title. */}
                     <option value="">book</option>
                     <option value="author">author</option>
-                </Form.Select>
+                </FormSelect>
                 <Button type="submit">Search</Button>
                 {/*  
                 !! This seems needlessly complicated and hides away critical information from the user !!
