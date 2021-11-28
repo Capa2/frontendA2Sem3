@@ -14,9 +14,6 @@ export default function userFacade() {
             .then(res => {
                 setToken(res.token);
                 return getUserFromToken(res.token);
-            }).catch(err => {
-                console.log(err);
-                return null;
             });
     }
 

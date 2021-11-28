@@ -40,6 +40,9 @@ export default function App() {
         setUserState(res);
         if (!loggedInState) setLoggedInState(true);
         navigate("/");
+      })
+      .catch(err => {
+        console.log(err);
       });
   }
 
