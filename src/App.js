@@ -35,14 +35,11 @@ export default function App() {
   }
 
   function loginProtocol(user, pass) {
-    login(user, pass)
+    return login(user, pass)
       .then(res => {
         setUserState(res);
         if (!loggedInState) setLoggedInState(true);
         navigate("/");
-      })
-      .catch(err => {
-        console.log(err);
       });
   }
 

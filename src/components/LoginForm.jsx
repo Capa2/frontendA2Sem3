@@ -5,10 +5,23 @@ export default function LoginForm({ login }) {
     const [usernameValue, setUsernameValue] = useState();
     const [passwordValue, setPasswordValue] = useState();
     const [isLoggingIn, setIsLoggingIn] = useState();
+    const [errorMessage, setErrorMessage] = useState();
+
     function submitLogin(event) {
         event.preventDefault();
         setIsLoggingIn(true);
-        login(usernameValue, passwordValue);
+        login(usernameValue, passwordValue)
+            .catch(err => {
+                if (err.status) {
+                    err.fullError.then(e => {
+                        setErrorMessage(e.message);
+                    })
+                }
+                else {
+                    setErrorMessage("Network error")
+                }
+                setIsLoggingIn(false);
+            });
     }
 
     return <Form className="loginForm mt-3 m-auto" onSubmit={submitLogin}>
@@ -27,5 +40,6 @@ export default function LoginForm({ login }) {
             id="password" />
 
         <Button className="d-block mx-auto" type="submit" size="lg" disabled={!usernameValue || !passwordValue || isLoggingIn}>{isLoggingIn ? '...' : 'Sign in'}</Button>
+        {errorMessage}
     </Form>
 }
