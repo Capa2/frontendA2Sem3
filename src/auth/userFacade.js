@@ -38,8 +38,7 @@ export default function userFacade() {
         const options = makeOptions("POST", false, { username: user, password: pass });
         return fetch(`${URL}/signup`, options)
             .then(handleHttpErrors)
-            .then(res => { return res })
-            .catch(err => console.log(err));
+            .then(res => { return res });
     }
 
     function getUser(_token) {
