@@ -18,6 +18,7 @@ import FunStuffPage from "./pages/FunStuffPage";
 import BookPage from "./pages/BookPage";
 //components
 import BookProp from "./components/BookProp";
+import SignupPage from "./pages/SignupPage";
 
 
 export default function App() {
@@ -65,6 +66,7 @@ export default function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/login" element={<LoginPage login={loginProtocol} />} />
           <Route path="/logout" element={<LogoutPage logout={logoutProtocol} />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="/book" element={<BookPage result={BookProp} />} />
           <Route path="*" element={<NoMatchPage />} />
         </Routes>

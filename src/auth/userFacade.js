@@ -4,12 +4,12 @@ import makeOptions from "../utils/makeOptions";
 import tokenUtil from "./tokenUtil";
 
 export default function userFacade() {
-    const URL = `${SERVER_URL}/api/login`
+    const URL = `${SERVER_URL}/api`
     const { getToken, setToken, getUserFromToken } = tokenUtil();
 
     function login(user, pass) {
         const options = makeOptions("POST", false, { username: user, password: pass });
-        return fetch(URL, options)
+        return fetch(`${URL}/login`, options)
             .then(handleHttpErrors)
             .then(res => {
                 setToken(res.token);
@@ -34,6 +34,14 @@ export default function userFacade() {
         return isLoggedIn;
     }
 
+    function signup(user, pass) {
+        const options = makeOptions("POST", false, { username: user, password: pass });
+        return fetch(`${URL}/signup`, options)
+            .then(handleHttpErrors)
+            .then(res => { return res })
+            .catch(err => console.log(err));
+    }
+
     function getUser(_token) {
         const token = (_token) ? _token : getToken();
         return loggedIn(token) ? getUserFromToken(token) : null;
@@ -43,6 +51,7 @@ export default function userFacade() {
         loggedIn,
         login,
         logout,
+        signup,
         getUser,
     }
 }
