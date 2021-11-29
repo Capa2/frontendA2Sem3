@@ -1,5 +1,3 @@
-import ResultPage from "./ResultPage";
-
 export default function About() {
     return (
         <>

@@ -1,16 +1,19 @@
 import { useState } from "react";
 import { Button, Form, FormControl } from "react-bootstrap";
+import userFacade from "../auth/userFacade";
 
-export default function LoginForm({ login }) {
+export default function SignupForm({ success }) {
+    const { signup } = userFacade();
     const [usernameValue, setUsernameValue] = useState();
     const [passwordValue, setPasswordValue] = useState();
-    const [isLoggingIn, setIsLoggingIn] = useState();
+    const [isProcessing, setIsProcessing] = useState();
     const [errorMessage, setErrorMessage] = useState();
 
     function submitLogin(event) {
         event.preventDefault();
-        setIsLoggingIn(true);
-        login(usernameValue, passwordValue)
+        setIsProcessing(true);
+        signup(usernameValue, passwordValue)
+            .then(res => success(res))
             .catch(err => {
                 if (err.status) {
                     err.fullError.then(e => {
@@ -20,7 +23,7 @@ export default function LoginForm({ login }) {
                 else {
                     setErrorMessage("Network error")
                 }
-                setIsLoggingIn(false);
+                setIsProcessing(false);
             });
     }
 
@@ -39,7 +42,7 @@ export default function LoginForm({ login }) {
             placeholder="password"
             id="password" />
 
-        <Button className="d-block mx-auto" type="submit" size="lg" disabled={!usernameValue || !passwordValue || isLoggingIn}>{isLoggingIn ? '...' : 'Sign in'}</Button>
+        <Button className="d-block mx-auto" type="submit" size="lg" disabled={!usernameValue || !passwordValue || isProcessing}>{isProcessing ? '...' : 'Sign up'}</Button>
         {errorMessage}
     </Form>
 }

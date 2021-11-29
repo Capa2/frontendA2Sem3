@@ -9,13 +9,16 @@ import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import WikipediaPage from "./pages/WikipediaPage";
 import DadJokePage from "./pages/DadJokePage";
-import ResultPage from "./pages/ResultPage";
 import UserPage from "./pages/UserPage";
 import AdminPage from "./pages/AdminPage";
 import NoMatchPage from "./pages/NoMatchPage";
 import LoginPage from "./pages/LoginPage";
 import LogoutPage from "./pages/LogoutPage";
 import FunStuffPage from "./pages/FunStuffPage";
+import BookPage from "./pages/BookPage";
+//components
+import BookProp from "./components/BookProp";
+import SignupPage from "./pages/SignupPage";
 
 
 export default function App() {
@@ -32,13 +35,17 @@ export default function App() {
   }
 
   function loginProtocol(user, pass) {
-    login(user, pass)
+    return login(user, pass)
       .then(res => {
         setUserState(res);
         if (!loggedInState) setLoggedInState(true);
         navigate("/");
       });
   }
+
+  /* function viewBook(book) {
+    navigate("/book/" + book.title)
+  } */
 
   useEffect(() => {
     document.title = "Booksave";
@@ -61,9 +68,10 @@ export default function App() {
           <Route path="/user" element={<UserPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/result" element={<ResultPage />} />
           <Route path="/login" element={<LoginPage login={loginProtocol} />} />
           <Route path="/logout" element={<LogoutPage logout={logoutProtocol} />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/book" element={<BookPage result={BookProp} />} />
           <Route path="*" element={<NoMatchPage />} />
         </Routes>
       </Container>

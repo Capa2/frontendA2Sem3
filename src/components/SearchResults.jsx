@@ -1,16 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import { Image, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Route } from "react-router";
 import apiFacade from "../apiFacade";
+import BookProp from "./BookProp";
 
 function SearchResults({ query }) {
     const [searchResults, setSearchResults] = useState();
+    const [selectedBook, setSelectedBook] = useState();
     const mounted = useRef(true);
 
     function SingleResult({ result }) {
         return (
             <ListGroupItem>
-                <Image src={result.thumbnail_urls[1]} className="float-start me-2" thumbnail />
-                <h2>{result.title}</h2>
+                <Image src={result.thumbnail_urls[1]} className="float-start me-2" thumbnail onClick={()=>setSelectedBook(result)} />
+                <h2>{result.title} <p> href="#"</p></h2>
                 <p>by: {result.authors.map((a, i) => [i > 0 && ", ", <a href="#" key={a.key}>{a.name}</a>])}</p>
                 <p>First published in: {result.first_publish_year}</p>
                 <p>Median page count: {result.number_of_pages_median}</p>
@@ -30,6 +33,11 @@ function SearchResults({ query }) {
     if (!searchResults) {
         return null;
     }
+
+    if (selectedBook)
+     return (
+     <BookProp result={selectedBook}/>
+     )
 
     return (
         <div>
