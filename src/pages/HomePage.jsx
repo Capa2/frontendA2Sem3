@@ -45,8 +45,7 @@ export default function Home() {
 
 	return (
 		<>
-			<h1>Home</h1>
-
+			<h2>Search for {search.type ? search.type + "s" : "anything"}</h2>
 			<Form className="mb-3" onSubmit={performSearch}>
 				<InputGroup>
 					<FormControl
@@ -54,7 +53,7 @@ export default function Home() {
 						name="query"
 						type="text"
 						value={search.query ? search.query : ""}
-						size="lg"
+					
 						onChange={handleChange}
 						placeholder="Search"
 					/>
@@ -62,7 +61,6 @@ export default function Home() {
 						<FormSelect
 							name="type"
 							defaultValue={search.type}
-							size="lg"
 							aria-label="search select"
 							onChange={handleChange}
 						>
