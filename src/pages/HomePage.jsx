@@ -1,92 +1,43 @@
 import { useState } from "react";
-import {
-	Button,
-	Form,
-	FormControl,
-	FormSelect,
-	InputGroup,
-	Row,
-	FloatingLabel,
-} from "react-bootstrap";
+import { Button, Form, FormControl, FormSelect, InputGroup, FloatingLabel, Row } from "react-bootstrap";
 import SearchResults from "../components/SearchResults";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
+import SearchForm from "../components/search/searchForm";
 
 export default function Home() {
 	const [searchParams, setSearchParams] = useSearchParams();
-	const queryObject = Object.fromEntries(searchParams.entries());
-	const [search, setSearch] = useState(queryObject);
-	// ^ search could just initialise as query, but then it gives an annoying error message in console because the controlled value goes from undefined to defined.
-	const navigate = useNavigate();
+	const [query, setQuery] = useState(searchParams.get("query"));
+	const [filter, setFilter] = useState(searchParams.get("filter"));
 
-	function handleChange(event) {
-		const key = event.target.name;
-		const value = event.target.value;
-		setSearch({ ...search, [key]: value });
-	}
-
-	function performSearch(event) {
+	function handleSubmit(event) {
 		event.preventDefault();
-		if (search.query) {
-			let params = new URLSearchParams(search);
-
-			navigate({
-				pathname: "search",
-				search: params.toString(),
-			});
-		}
+		if (!query) { setSearchParams(); return; }
+		setSearchParams({
+			"query": query,
+			"filter": filter,
+		})
 	}
 
 	function getQueryString() {
-		const { type, query } = queryObject;
-		const res = (type ? type + ":" : "") + query;
-		return res;
+		const query = searchParams.get("query");
+		const filter = searchParams.get("filter");
+		if (filter == "none") return query;
+		return filter + ":" + query;
 	}
 
 	return (
 		<>
-			<h2>Search for {search.type ? search.type + "s" : "anything"}</h2>
-			<Form className="mb-3" onSubmit={performSearch}>
-				<InputGroup>
-					<FormControl
-						className="searchInput w-66"
-						name="query"
-						type="text"
-						value={search.query ? search.query : ""}
-					
-						onChange={handleChange}
-						placeholder="Search"
-					/>
-					<FloatingLabel controlId="floatingFilter" label="Filter">
-						<FormSelect
-							name="type"
-							defaultValue={search.type}
-							aria-label="search select"
-							onChange={handleChange}
-						>
-							{/* The empty value is to use the API's generic search as opposed to forcing it to match title. */}
-							<option value="">none</option>
-							<option value="title">book</option>
-							<option value="author">author</option>
-							<option value="subject">subject</option>
-						</FormSelect>
-					</FloatingLabel>
-					<Button disabled={search.query == null || search.query.length < 3} type="submit">Search</Button>
-					{/*  
-                !! This seems needlessly complicated and hides away critical information from the user !!
-                <Dropdown as={ButtonGroup}>
-                    <Button type="submit">Search</Button>
-                    <Dropdown.Toggle split />
-                    <Dropdown.Menu onClick={changeSearchType}>
-                        <Dropdown.Item as="button" value="">Simple</Dropdown.Item>
-                        <Dropdown.Item as="button" value="author">Author</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-                <InputGroup.Text>{searchType}</InputGroup.Text>
-                */}
-				</InputGroup>
-			</Form>
-			{queryObject.query && (
+			<h2>Search for {filter ? filter + "s" : "anything"}</h2>
+			<SearchForm
+				query={query}
+				setQuery={setQuery}
+				filter={filter}
+				setFilter={setFilter}
+				searchParams={searchParams}
+				setSearchParams={setSearchParams}
+			></SearchForm>
+			{searchParams.has("query") && (
 				<Row>
 					<SearchResults query={getQueryString()} />
 				</Row>
