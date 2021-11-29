@@ -35,18 +35,22 @@ function SearchResults() {
     }, []);
 
     useEffect(() => {
-        apiFacade.fetchSearchResults(buildQueryFromParams(searchParams), setSearchResults, mounted);
+        console.log(searchParams);
+        if (searchParams.has("query")) apiFacade.fetchSearchResults(buildQueryFromParams(searchParams), setSearchResults, mounted);
+        console.log(searchResults);
     }, [searchParams]);
 
     if (selectedBook) {
         return (<BookProp result={selectedBook} />);
     }
 
+    if (!searchResults || searchResults.numFound == 0) {
+        return searchParams.has("query") ? <p>No results</p> : null;
+    }
+
     return (
-        !!searchResults && <div>
-            {searchResults.numFound > 0
-                ? <p>Results: {searchResults.numFound}</p>
-                : <p>No results</p>}
+        <div>
+            <p>Results: {searchResults.numFound}</p>
             <ListGroup>
                 {searchResults.results.map(r => <SingleResult key={r.key} result={r} />)}
             </ListGroup>
