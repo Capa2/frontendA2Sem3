@@ -1,18 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import { Image, ListGroup, ListGroupItem } from "react-bootstrap";
-import { Route } from "react-router";
-import apiFacade from "../apiFacade";
-import BookProp from "./BookProp";
+import apiFacade from "../../apiFacade";
+import { useSearchParams } from "react-router-dom";
+import BookProp from "../BookProp";
 
-function SearchResults({ query }) {
+function SearchResults() {
+    const [searchParams] = useSearchParams();
     const [searchResults, setSearchResults] = useState();
     const [selectedBook, setSelectedBook] = useState();
     const mounted = useRef(true);
 
+    function buildQueryFromParams() {
+        const query = searchParams.get("query");
+        const filter = searchParams.get("filter");
+        if (filter == "none") return query;
+        return filter + ":" + query;
+    }
+
     function SingleResult({ result }) {
         return (
             <ListGroupItem>
-                <Image src={result.thumbnail_urls[1]} className="float-start me-2" thumbnail onClick={()=>setSelectedBook(result)} />
+                <Image src={result.thumbnail_urls[1]} className="float-start me-2" thumbnail onClick={() => setSelectedBook(result)} />
                 <h3>{result.title}</h3>
                 <p>by: {result.authors.map((a, i) => [i > 0 && ", ", <a href="#" key={a.key}>{a.name}</a>])}</p>
                 <p>First published in: {result.first_publish_year}</p>
@@ -27,17 +35,17 @@ function SearchResults({ query }) {
     }, []);
 
     useEffect(() => {
-        apiFacade.fetchSearchResults(query, setSearchResults, mounted);
-    }, [query])
+        apiFacade.fetchSearchResults(buildQueryFromParams(searchParams), setSearchResults, mounted);
+    }, [searchParams])
 
     if (!searchResults) {
         return null;
     }
 
     if (selectedBook)
-     return (
-     <BookProp result={selectedBook}/>
-     )
+        return (
+            <BookProp result={selectedBook} />
+        )
 
     return (
         <div>

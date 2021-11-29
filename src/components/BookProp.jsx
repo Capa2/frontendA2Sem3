@@ -1,4 +1,4 @@
-import SearchResults from "./SearchResults";
+import SearchResults from "./search/SearchResults";
 
 function BookProp({result}) {
     
