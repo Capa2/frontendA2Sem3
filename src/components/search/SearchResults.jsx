@@ -13,7 +13,7 @@ function SearchResults() {
     function buildQueryFromParams() {
         const query = searchParams.get("query");
         const filter = searchParams.get("filter");
-        if (filter == "none") return query;
+        if (filter == "none" || filter == "null" || !filter) return query;
         return filter + ":" + query;
     }
 
@@ -36,19 +36,14 @@ function SearchResults() {
 
     useEffect(() => {
         apiFacade.fetchSearchResults(buildQueryFromParams(searchParams), setSearchResults, mounted);
-    }, [searchParams])
+    }, [searchParams]);
 
-    if (!searchResults) {
-        return null;
+    if (selectedBook) {
+        return (<BookProp result={selectedBook} />);
     }
 
-    if (selectedBook)
-        return (
-            <BookProp result={selectedBook} />
-        )
-
     return (
-        <div>
+        !!searchResults && <div>
             {searchResults.numFound > 0
                 ? <p>Results: {searchResults.numFound}</p>
                 : <p>No results</p>}
