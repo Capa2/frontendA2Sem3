@@ -41,6 +41,10 @@ export default function App() {
   }
 
   useEffect(() => {
+    document.title = "Booksave";
+  },[]);
+
+  useEffect(() => {
     if (!loggedIn() && loggedInState) logoutProtocol();
   });
 
