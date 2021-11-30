@@ -1,11 +1,17 @@
 import { useState } from "react";
-import { Button, Form, FormControl, FormSelect, InputGroup, FloatingLabel, Row } from "react-bootstrap";
+import { Button, Form, FormControl, FormSelect, InputGroup, FloatingLabel } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
 
 export default function SearchForm() {
 	const [searchParams, setSearchParams] = useSearchParams();
-	const [query, setQuery] = useState(searchParams.get("query"));
-	const [filter, setFilter] = useState(searchParams.get("filter"));
+	const [query, setQuery] = useState(() => {
+		const query = searchParams.get("query");
+		return query ? query : "";
+	});
+	const [filter, setFilter] = useState(() => {
+		const filter = searchParams.get("filter");
+		return filter ? filter : "";
+	});
 
 	function handleSubmit(event) {
 		event.preventDefault();

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import apiFacade from "../apiFacade";
 
-function LibraryPage() {
+export default function LibraryPage() {
     const [content, setContent] = useState();
     const mounted = useRef(true);
 
@@ -18,5 +18,3 @@ function LibraryPage() {
         </div>
     );
 }
-
-export default LibraryPage;

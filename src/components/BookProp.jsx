@@ -1,5 +1,3 @@
-import SearchResults from "./search/SearchResults";
-
 function BookProp({result}) {
     
     const {title, author} = result;
