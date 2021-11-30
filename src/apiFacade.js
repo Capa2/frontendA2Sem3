@@ -2,7 +2,6 @@ import { SERVER_URL } from "./settings";
 import fetchData from "./utils/fetchData";
 
 function fetchSearchResults(query, setSearchResults, mounted) {
-    setSearchResults();
     fetchData(`${SERVER_URL}/api/search/${query}`, "GET", setSearchResults, mounted);
 }
 
