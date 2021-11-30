@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Form, FormControl } from "react-bootstrap";
-import userFacade from "../auth/userFacade";
+import userFacade from "../../auth/userFacade";
 
 export default function SignupForm({ success }) {
     const { signup } = userFacade();

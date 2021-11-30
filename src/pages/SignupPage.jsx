@@ -1,6 +1,6 @@
 import { useState } from "react";
-import SignupForm from "../components/SignupForm";
-import SignupSuccess from "../components/SignupSuccess";
+import SignupForm from "../components/userstate/SignupForm";
+import SignupSuccess from "../components/userstate/SignupSuccess";
 
 export default function SignupPage() {
     const [confirmation, setConfirmation] = useState();
