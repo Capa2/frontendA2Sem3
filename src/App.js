@@ -4,7 +4,6 @@ import { Container } from "react-bootstrap";
 import userFacade from "./auth/userFacade";
 import NavBar from "./components/nav/NavBar";
 import Hero from "./components/Hero";
-import ErrorBoundery from "./components/ErrorBoundery";
 // PAGES:
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
@@ -58,7 +57,6 @@ export default function App() {
       <Hero />
       <NavBar loggedIn={loggedInState} user={userState} />
       <Container className="pageContent pt-3 pb-3" fluid="sm">
-        <ErrorBoundery>
           <Routes>
             <Route path="/*" element={<HomePage />} />
             <Route path="/library" element={<LibraryPage />} />
@@ -70,7 +68,6 @@ export default function App() {
             <Route path="/book" element={<BookPage result={BookProp} />} />
             <Route path="*" element={<NoMatchPage />} />
           </Routes>
-        </ErrorBoundery>
       </Container>
     </Container>
   );

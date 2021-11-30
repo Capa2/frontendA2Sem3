@@ -3,6 +3,7 @@ import { Image, ListGroup, ListGroupItem } from "react-bootstrap";
 import apiFacade from "../../apiFacade";
 import { useSearchParams } from "react-router-dom";
 import BookProp from "../BookProp";
+import ResultStatus from "./ResultStatus";
 
 function SearchResults() {
     const [searchParams] = useSearchParams();
@@ -28,13 +29,13 @@ function SearchResults() {
     }, []);
 
     useEffect(() => {
+        setSearchResults(null);
         function buildQueryFromParams() {
             const query = searchParams.get("query");
             const filter = searchParams.get("filter");
             if (filter === "none" || filter === "null" || !filter) return query;
             return filter + ":" + query;
         }
-
         if (searchParams.has("query")) apiFacade.fetchSearchResults(buildQueryFromParams(searchParams), setSearchResults, mounted);
     }, [searchParams]);
 
@@ -42,13 +43,13 @@ function SearchResults() {
         return (<BookProp result={selectedBook} />);
     }
 
-    if (!searchResults || searchResults.numFound === 0) {
-        return searchParams.has("query") ? <p>No results</p> : null;
+    if (!searchResults) {
+        return <ResultStatus result={searchResults} />
     }
 
     return (
         <div>
-            <p>Results: {searchResults.numFound}</p>
+            <ResultStatus result={searchResults} />
             <ListGroup>
                 {searchResults.results.map(r => <SingleResult key={r.key} result={r} />)}
             </ListGroup>
