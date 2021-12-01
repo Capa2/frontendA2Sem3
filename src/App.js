@@ -57,17 +57,17 @@ export default function App() {
       <Hero />
       <NavBar loggedIn={loggedInState} user={userState} />
       <Container className="pageContent pt-3 pb-3" fluid="sm">
-          <Routes>
-            <Route path="/*" element={<HomePage />} />
-            <Route path="/library" element={<LibraryPage />} />
-            <Route path="/admin" element={<AdminPage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/login" element={<LoginPage login={loginProtocol} />} />
-            <Route path="/logout" element={<LogoutPage logout={logoutProtocol} />} />
-            <Route path="/signup" element={<SignupPage />} />
-            <Route path="/book" element={<BookPage result={BookProp} />} />
-            <Route path="*" element={<NoMatchPage />} />
-          </Routes>
+        <Routes>
+          <Route path="/*" element={<HomePage />} />
+          <Route path="/library" element={<LibraryPage user={userState} />} />
+          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/login" element={<LoginPage login={loginProtocol} />} />
+          <Route path="/logout" element={<LogoutPage logout={logoutProtocol} />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/book" element={<BookPage result={BookProp} />} />
+          <Route path="*" element={<NoMatchPage />} />
+        </Routes>
       </Container>
     </Container>
   );

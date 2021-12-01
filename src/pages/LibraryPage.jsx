@@ -1,19 +1,38 @@
 import { useEffect, useRef, useState } from "react";
+import { Image, ListGroup, ListGroupItem } from "react-bootstrap";
 import apiFacade from "../apiFacade";
 
-export default function LibraryPage() {
-    const [content, setContent] = useState();
+export default function LibraryPage({ user }) {
+    const [library, setLibrary] = useState();
     const mounted = useRef(true);
 
+    function LibraryItem({ item }) {
+        return (
+            <ListGroupItem>
+                <Image src={item.book.thumbnail_urls[1]} className="float-start me-2" thumbnail />
+                <h3>{item.book.title}</h3>
+                <p>by: {item.book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
+                <p>First published in: {item.book.first_publish_year}</p>
+                <p>Status: {item.status}</p>
+                <p>Rating: {item.rating}/5</p>
+            </ListGroupItem>
+        )
+    }
+
     useEffect(() => {
-        apiFacade.fetchUserPage(setContent, mounted);
+        apiFacade.fetchUserLibrary(setLibrary, mounted);
         return () => mounted.current = false;
     }, []);
 
     return (
         <div>
-            {content
-                ? <h1>{content.msg}</h1>
+            <h1>{user.username}'s library</h1>
+            {library
+                ? library.size > 0 ?
+                    <ListGroup>
+                        {library.library.map(item => <LibraryItem key={item.book.key} item={item} />)}
+                    </ListGroup>
+                    : <p>Your library is empty. Add some books.</p>
                 : <p>Loading...</p>}
         </div>
     );
