@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Image, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Button, Image, ListGroup, ListGroupItem } from "react-bootstrap";
 import apiFacade from "../../apiFacade";
 import { useSearchParams } from "react-router-dom";
 import BookProp from "../BookProp";
@@ -12,6 +12,14 @@ function SearchResults() {
     const mounted = useRef(true);
 
     function SingleResult({ result }) {
+        // should maybe run a check on all books (after load for performance perhaps) to see if they're already in library.
+        const [inLibrary, setInLibrary] = useState();
+
+        function addToLibrary(event) {
+            const key = event.target.value;
+            apiFacade.addToUserLibrary(key, setInLibrary, mounted);
+        }
+
         return (
             <ListGroupItem>
                 <Image src={result.thumbnail_urls[1]} className="float-start me-2" thumbnail onClick={() => setSelectedBook(result)} />
@@ -20,6 +28,7 @@ function SearchResults() {
                 <p>First published in: {result.first_publish_year}</p>
                 <p>Page count: {result.number_of_pages_median}</p>
                 <p>{result.subjects.map((s, i) => [i > 0 && ", ", <a href="/" key={s.key}>{s.name}</a>])}</p>
+                <Button value={result.key} onClick={addToLibrary} disabled={inLibrary}>{!inLibrary ? "Add to library" : "Already in library"}</Button>
             </ListGroupItem>
         )
     }

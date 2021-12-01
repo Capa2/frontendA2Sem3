@@ -21,6 +21,10 @@ function fetchUserPage(setContent, mounted) {
     fetchData(`${SERVER_URL}/api/info/user`, "GET", setContent, mounted, true);
 }
 
+function addToUserLibrary(key, setInLibrary, mounted) {
+    fetchData(`${SERVER_URL}/api/library/add/${key}`, "POST", setInLibrary, mounted, true);
+}
+
 function fetchUserLibrary(setLibrary, mounted) {
     fetchData(`${SERVER_URL}/api/library/get`, "GET", setLibrary, mounted, true);
 }
@@ -35,6 +39,7 @@ const apiFacade = {
     fetchDadJokes,
     fetchFunStuff,
     fetchUserPage,
+    addToUserLibrary,
     fetchUserLibrary,
     fetchAdminPage
 }
