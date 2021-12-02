@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Image, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Image, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import apiFacade from "../apiFacade";
 
 export default function LibraryPage({ user }) {
@@ -7,6 +7,12 @@ export default function LibraryPage({ user }) {
     const mounted = useRef(true);
 
     function LibraryItem({ item }) {
+        const [inLibrary, setInLibrary] = useState(true);
+        function delFromLibrary(event) {
+            const key = event.target.value;
+            apiFacade.delFromUserLibrary(key, setInLibrary, mounted);
+        }
+        if (!inLibrary) return;
         return (
             <ListGroupItem>
                 <Image src={item.book.thumbnail_urls[1]} className="float-start me-2" thumbnail />
@@ -15,6 +21,7 @@ export default function LibraryPage({ user }) {
                 <p>First published in: {item.book.first_publish_year}</p>
                 <p>Status: {item.status}</p>
                 <p>Rating: {item.rating}/5</p>
+                <Button value={item.book.key} onClick={delFromLibrary} disabled={!inLibrary}>{inLibrary ? "Delete from library" : "Deleted"}</Button>
             </ListGroupItem>
         )
     }
