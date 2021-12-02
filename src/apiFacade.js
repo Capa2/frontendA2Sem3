@@ -13,8 +13,9 @@ function addToUserLibrary(key, setInLibrary, mounted) {
     fetchData(`${SERVER_URL}/api/library/add/${key}`, "POST", setInLibrary, mounted, true);
 }
 
-function delFromUserLibrary(key, setInLibrary, mounted) {
-    fetchData(`${SERVER_URL}/api/library/delete/${key}`, "DELETE", setInLibrary, mounted, true);
+function delFromUserLibrary(key, mounted) {
+    function doNothing() { console.log("deleting", key) };
+    fetchData(`${SERVER_URL}/api/library/delete/${key}`, "DELETE", doNothing, mounted, true);
 }
 
 

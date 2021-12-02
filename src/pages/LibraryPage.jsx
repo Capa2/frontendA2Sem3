@@ -5,14 +5,14 @@ import apiFacade from "../apiFacade";
 export default function LibraryPage({ user }) {
     const [library, setLibrary] = useState();
     const mounted = useRef(true);
-
     function LibraryItem({ item }) {
-        const [inLibrary, setInLibrary] = useState(true);
+        const [deleted, setDeleted] = useState();
         function delFromLibrary(event) {
             const key = event.target.value;
-            apiFacade.delFromUserLibrary(key, setInLibrary, mounted);
+            apiFacade.delFromUserLibrary(key, mounted);
+            setDeleted(true);
         }
-        if (!inLibrary) return;
+        if (deleted) return null;
         return (
             <ListGroupItem>
                 <Image src={item.book.thumbnail_urls[1]} className="float-start me-2" thumbnail />
@@ -21,7 +21,7 @@ export default function LibraryPage({ user }) {
                 <p>First published in: {item.book.first_publish_year}</p>
                 <p>Status: {item.status}</p>
                 <p>Rating: {item.rating}/5</p>
-                <Button value={item.book.key} onClick={delFromLibrary} disabled={!inLibrary}>{inLibrary ? "Delete from library" : "Deleted"}</Button>
+                <Button value={item.book.key} onClick={delFromLibrary} disabled={deleted}>{!deleted ? "Delete from library" : "Deleted"}</Button>
             </ListGroupItem>
         )
     }
