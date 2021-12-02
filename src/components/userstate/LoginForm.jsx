@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Form, FormControl } from "react-bootstrap";
+import { Button, Form, FormControl, Alert } from "react-bootstrap";
 
 export default function LoginForm({ login }) {
     const [usernameValue, setUsernameValue] = useState();
@@ -40,6 +40,6 @@ export default function LoginForm({ login }) {
             id="password" />
 
         <Button className="d-block mx-auto" type="submit" size="lg" disabled={!usernameValue || !passwordValue || isLoggingIn}>{isLoggingIn ? '...' : 'Sign in'}</Button>
-        {errorMessage}
+        {errorMessage && <Alert className="mt-3" key={'loginError'} variant={'danger'}>{errorMessage}</Alert>}
     </Form>
 }

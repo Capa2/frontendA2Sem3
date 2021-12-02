@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Form, FormControl } from "react-bootstrap";
+import { Button, Form, FormControl, Alert } from "react-bootstrap";
 import userFacade from "../../auth/userFacade";
 
 export default function SignupForm({ success }) {
@@ -43,6 +43,6 @@ export default function SignupForm({ success }) {
             id="password" />
 
         <Button className="d-block mx-auto" type="submit" size="lg" disabled={!usernameValue || !passwordValue || isProcessing}>{isProcessing ? '...' : 'Sign up'}</Button>
-        {errorMessage}
+        {errorMessage && <Alert className="mt-3" key={'signupError'} variant={'danger'}>{errorMessage}</Alert>}
     </Form>
 }

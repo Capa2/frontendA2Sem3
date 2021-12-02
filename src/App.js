@@ -36,7 +36,7 @@ export default function App() {
       .then(res => {
         setUserState(res);
         if (!loggedInState) setLoggedInState(true);
-        navigate("/");
+        navigate("/library");
       });
   }
 
