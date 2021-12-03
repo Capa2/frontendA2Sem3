@@ -16,6 +16,7 @@ function BookPage() {
 
                     <p>By Arthur Golden</p>
                     <p>6969 pages</p>
+                    <p>Released 6/9 2069</p>
                     <p>First Edition (Hardcover)</p>
                     <FormSelect
                         name="status"
