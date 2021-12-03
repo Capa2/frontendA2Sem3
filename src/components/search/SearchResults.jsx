@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { Button, Image, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Image, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import apiFacade from "../../apiFacade";
+import LibraryBtn from "../LibraryBtn";
 import ResultStatus from "./ResultStatus";
 
-function SearchResults() {
+function SearchResults({ isLoggedIn }) {
     const [searchParams] = useSearchParams();
     const [searchResults, setSearchResults] = useState();
     const mounted = useRef(true);
@@ -12,13 +13,6 @@ function SearchResults() {
 
 
     function SingleResult({ result }) {
-        // should maybe run a check on all books (after load for performance perhaps) to see if they're already in library.
-        const [inLibrary, setInLibrary] = useState();
-
-        function addToLibrary(event) {
-            const key = event.target.value;
-            apiFacade.addToUserLibrary(key, setInLibrary, mounted);
-        }
 
         return (
             <ListGroupItem>
@@ -28,7 +22,8 @@ function SearchResults() {
                 <p>First published in: {result.first_publish_year}</p>
                 <p>Page count: {result.number_of_pages_median}</p>
                 <p>{result.subjects.map((s, i) => [i > 0 && ", ", <a href="/" key={s.key}>{s.name}</a>])}</p>
-                <Button value={result.key} onClick={addToLibrary} disabled={inLibrary}>{!inLibrary ? "Add to library" : "Already in library"}</Button>
+                <LibraryBtn bookId={result.key} isLoggedIn={isLoggedIn} />
+
             </ListGroupItem>
         )
     }

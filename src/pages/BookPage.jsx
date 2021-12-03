@@ -1,11 +1,10 @@
-import BookProp from "../components/BookProp";
 import { Row, Col, Image, FormSelect } from "react-bootstrap";
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Rating from "../components/Rating";
 import apiFacade from "../apiFacade";
-
-function BookPage() {
+import LibraryBtn from "../components/LibraryBtn";
+function BookPage({isLoggedIn}) {
     const [status, setStatus] = useState();
     const [book, setBook] = useState();
     const { key } = useParams();
@@ -24,7 +23,7 @@ function BookPage() {
     }, []);
 
     useEffect(() => {
-        console.log(book);
+        //console.log(book);
     }, [book]);
 
     if (!book) return <h1>Loading {key} ...</h1>;
@@ -37,7 +36,6 @@ function BookPage() {
             <Col lg="8" md="8" xs="12">
                 <Row>
                     <h1>{book.title}</h1>
-
                     <p>By: {book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
                     <p>{book.number_of_pages_median} pages</p>
                     <p>Released: {book.first_publish_year}</p>
@@ -55,6 +53,7 @@ function BookPage() {
                         <option value="read">read</option>
                     </FormSelect>
                     <Rating className="my-2" initRating="2" />
+                    <LibraryBtn bookId={book.key} isLoggedIn={isLoggedIn} />
                     <Row>
                         <Col>
                             <p>

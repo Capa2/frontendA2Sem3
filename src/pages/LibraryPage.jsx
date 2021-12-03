@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Image, ListGroup, ListGroupItem, Button } from "react-bootstrap";
+import LibraryBtn from "../components/LibraryBtn";
 import apiFacade from "../apiFacade";
 
 export default function LibraryPage({ user }) {
@@ -8,13 +9,6 @@ export default function LibraryPage({ user }) {
     const navigate = useNavigate();
     const mounted = useRef(true);
     function LibraryItem({ item }) {
-        const [deleted, setDeleted] = useState();
-        function delFromLibrary(event) {
-            const key = event.target.value;
-            apiFacade.delFromUserLibrary(key, mounted);
-            setDeleted(true);
-        }
-        if (deleted) return null;
         return (
             <ListGroupItem>
                 <Image src={item.book.thumbnail_urls[1]} className="float-start me-2" thumbnail onClick={() => navigate(`/book/${item.book.key}`)} />
@@ -23,13 +17,13 @@ export default function LibraryPage({ user }) {
                 <p>First published in: {item.book.first_publish_year}</p>
                 <p>Status: {item.status}</p>
                 <p>Rating: {item.rating}/5</p>
-                <Button value={item.book.key} onClick={delFromLibrary} disabled={deleted}>{!deleted ? "Delete from library" : "Deleted"}</Button>
+                <LibraryBtn bookId={item.book.key} isLoggedIn={!!user} passedLibrary={library} />
             </ListGroupItem>
         )
     }
-
+    //<Button value={item.book.key} onClick={delFromLibrary} disabled={deleted}>{!deleted ? "Delete from library" : "Deleted"}</Button>
     useEffect(() => {
-        apiFacade.fetchUserLibrary(setLibrary, mounted);
+        apiFacade.fetchLibrary(setLibrary, mounted);
         return () => mounted.current = false;
     }, []);
 

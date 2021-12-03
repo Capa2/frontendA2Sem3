@@ -14,7 +14,6 @@ import LoginPage from "./pages/LoginPage";
 import LogoutPage from "./pages/LogoutPage";
 import BookPage from "./pages/BookPage";
 //components
-import BookProp from "./components/BookProp";
 import SignupPage from "./pages/SignupPage";
 
 
@@ -58,14 +57,14 @@ export default function App() {
       <NavBar loggedIn={loggedInState} user={userState} />
       <Container className="pageContent pt-3 pb-3" fluid="sm">
         <Routes>
-          <Route path="/*" element={<HomePage />} />
+          <Route path="/*" element={<HomePage isLoggedIn={loggedInState} />} />
           <Route path="/library" element={<LibraryPage user={userState} />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/login" element={<LoginPage login={loginProtocol} />} />
           <Route path="/logout" element={<LogoutPage logout={logoutProtocol} />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/book/:key" element={<BookPage />} />
+          <Route path="/book/:key" element={<BookPage isLoggedIn={loggedInState} />} />
           <Route path="*" element={<NoMatchPage />} />
         </Routes>
       </Container>
