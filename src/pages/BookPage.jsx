@@ -1,22 +1,46 @@
 import BookProp from "../components/BookProp";
 import { Row, Col, Image, FormSelect } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useParams } from "react-router-dom";
 import Rating from "../components/Rating";
+import apiFacade from "../apiFacade";
 
 function BookPage() {
     const [status, setStatus] = useState();
+    const [book, setBook] = useState();
+    const { key } = useParams();
+    const mounted = useRef(true);
+
+    function setResultAsBook(result) {
+        setBook(result.results[0]);
+    }
+
+    useEffect(() => {
+        apiFacade.fetchSearchResults(key, setResultAsBook, mounted);
+    }, []);
+
+    useEffect(() => {
+        return () => mounted.current = false;
+    }, []);
+
+    useEffect(() => {
+        console.log(book);
+    }, [book]);
+
+    if (!book) return <h1>Loading {key} ...</h1>;
+
     return (
         <Row>
             <Col lg="4" md="4" xs="12">
-                <Image thumbnail className="mx-auto d-block mb-2" fluid src="https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1409595968l/929.jpg" alt="cover" />
+                <Image thumbnail className="mx-auto d-block mb-2" fluid src={book.thumbnail_urls[2]} alt="cover" />
             </Col>
             <Col lg="8" md="8" xs="12">
                 <Row>
-                    <h1>Memoirs of a Geisha</h1>
+                    <h1>{book.title}</h1>
 
-                    <p>By Arthur Golden</p>
-                    <p>6969 pages</p>
-                    <p>Released 6/9 2069</p>
+                    <p>By: {book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
+                    <p>{book.number_of_pages_median} pages</p>
+                    <p>Released: {book.first_publish_year}</p>
                     <p>First Edition (Hardcover)</p>
                     <FormSelect
                         name="status"
@@ -41,9 +65,7 @@ function BookPage() {
                     </Row>
                     <Row>
                         <Col>
-                            <p>
-                                Subject, Genre, Subject, Genre, Subject, Genre, Subject, Genre, Subject, Genre, Subject, Genre, Subject, Genre, Subject, Genre
-                            </p>
+                            <p>{book.subjects.map((s, i) => [i > 0 && ", ", <a href="/" key={s.key}>{s.name}</a>])}</p>
                         </Col>
                     </Row>
                 </Row>

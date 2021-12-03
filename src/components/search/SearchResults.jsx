@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, Image, ListGroup, ListGroupItem } from "react-bootstrap";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import apiFacade from "../../apiFacade";
-import { useSearchParams } from "react-router-dom";
-import BookProp from "../BookProp";
 import ResultStatus from "./ResultStatus";
 
 function SearchResults() {
     const [searchParams] = useSearchParams();
     const [searchResults, setSearchResults] = useState();
-    const [selectedBook, setSelectedBook] = useState();
     const mounted = useRef(true);
+    const navigate = useNavigate();
+
 
     function SingleResult({ result }) {
         // should maybe run a check on all books (after load for performance perhaps) to see if they're already in library.
@@ -22,7 +22,7 @@ function SearchResults() {
 
         return (
             <ListGroupItem>
-                <Image src={result.thumbnail_urls[1]} className="float-start me-2" thumbnail onClick={() => setSelectedBook(result)} />
+                <Image src={result.thumbnail_urls[1]} className="float-start me-2" thumbnail onClick={() => navigate(`/book/${result.key}`)} />
                 <h3>{result.title}</h3>
                 <p>by: {result.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
                 <p>First published in: {result.first_publish_year}</p>
@@ -47,10 +47,6 @@ function SearchResults() {
         }
         if (searchParams.has("query")) apiFacade.fetchSearchResults(buildQueryFromParams(searchParams), setSearchResults, mounted);
     }, [searchParams]);
-
-    if (selectedBook) {
-        return (<BookProp result={selectedBook} />);
-    }
 
     if (!searchResults) {
         return <ResultStatus result={searchResults} />

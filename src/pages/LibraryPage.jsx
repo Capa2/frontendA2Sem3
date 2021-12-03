@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Image, ListGroup, ListGroupItem, Button } from "react-bootstrap";
 import apiFacade from "../apiFacade";
 
 export default function LibraryPage({ user }) {
     const [library, setLibrary] = useState();
+    const navigate = useNavigate();
     const mounted = useRef(true);
     function LibraryItem({ item }) {
         const [deleted, setDeleted] = useState();
@@ -15,7 +17,7 @@ export default function LibraryPage({ user }) {
         if (deleted) return null;
         return (
             <ListGroupItem>
-                <Image src={item.book.thumbnail_urls[1]} className="float-start me-2" thumbnail />
+                <Image src={item.book.thumbnail_urls[1]} className="float-start me-2" thumbnail onClick={() => navigate(`/book/${item.book.key}`)} />
                 <h3>{item.book.title}</h3>
                 <p>by: {item.book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
                 <p>First published in: {item.book.first_publish_year}</p>
