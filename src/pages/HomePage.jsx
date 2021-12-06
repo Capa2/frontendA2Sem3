@@ -1,6 +1,7 @@
 import SearchResults from "../components/search/SearchResults";
 import SearchForm from "../components/search/SearchForm";
-import Rating from "../components/Rating";
+import Rating from "../components/rating/Rating";
+import Star from "../components/rating/Star";
 export default function Home({isLoggedIn}) {
 
 	return (
