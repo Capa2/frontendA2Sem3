@@ -5,6 +5,10 @@ function fetchSearchResults(query, setSearchResults, mounted) {
     fetchData(`${SERVER_URL}/api/search/${query}`, "GET", setSearchResults, mounted);
 }
 
+function fetchBookDetails(key, setBook, mounted) {
+    fetchData(`${SERVER_URL}/api/book/${key}`, "GET", setBook, mounted);
+}
+
 function fetchUserPage(setContent, mounted) {
     fetchData(`${SERVER_URL}/api/info/user`, "GET", setContent, mounted, true);
 }
@@ -35,6 +39,7 @@ function fetchAdminPage(setContent, mounted) {
 
 const apiFacade = {
     fetchSearchResults,
+    fetchBookDetails,
     fetchUserPage,
     addToLibrary,
     delFromLibrary,
