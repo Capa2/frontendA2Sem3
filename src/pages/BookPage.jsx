@@ -22,7 +22,7 @@ function BookPage({ isLoggedIn }) {
         //console.log(book);
     }, [book]);
 
-    if (!book) return <h1>Loading {key} ...</h1>;
+    if (!book) return <h2>Loading {key} ...</h2>;
 
     return (
         <Row>
@@ -49,14 +49,14 @@ function BookPage({ isLoggedIn }) {
                             value={status}
                             aria-label="book status"
                             onChange={e => setStatus(e.target.value)}
-                            className="my-2 w-66"
+                            className="my-2"
                         >
                             <option value="none">status</option>
                             <option value="wantTo">want to read</option>
                             <option value="reading">reading</option>
                             <option value="read">read</option>
                         </FormSelect>
-                        <Rating initRating="0" />
+                        <Rating bookId={key} initRating="0" status={status} />
                         <LibraryBtn bookId={book.key} isLoggedIn={isLoggedIn} />
                     </Col>
                     <Row>

@@ -21,6 +21,14 @@ function addToLibrary(key, setExists, mounted) {
 
 }
 
+function editLibrary(key, rating, status, mounted) {
+    function tellMe(res) {
+        console.log({res}); // TODO: validate
+    }
+    fetchData(`${SERVER_URL}/api/library/edit/${key}`, "PUT", tellMe, mounted, true);
+
+}
+
 function delFromLibrary(key, setExists, mounted) {
     function tellMe() {
         setExists(false); // TODO: validate delete from library
@@ -41,6 +49,7 @@ const apiFacade = {
     fetchSearchResults,
     fetchBookDetails,
     fetchUserPage,
+    editLibrary,
     addToLibrary,
     delFromLibrary,
     fetchLibrary,

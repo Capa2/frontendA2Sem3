@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import Star from "./Star";
+import apiFacade from "../../apiFacade";
 
-function Rating({ initRating }) {
+function Rating({ bookId, initRating, status }) {
     var [rating, setRating] = useState(initRating);
 
     useEffect(() => {
-        //TODO: Update rating in backend
+        apiFacade.editLibrary(bookId, rating, status, true);
     }, [rating]);
 
     return (
