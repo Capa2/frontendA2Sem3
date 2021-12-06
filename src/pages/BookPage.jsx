@@ -42,7 +42,7 @@ function BookPage({ isLoggedIn }) {
                     <p>By: {book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
                     <p>{book.number_of_pages_median} pages</p>
                     <p>Released: {book.first_publish_year}</p>
-                    <p>{book.edition_name} ({book.physical_format})</p>
+                    <p>{book.edition_name} {book.physical_format && `(${book.physical_format})`}</p>
                     <FormSelect
                         name="status"
                         value={status}
