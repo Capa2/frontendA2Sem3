@@ -44,6 +44,7 @@ export default function SearchForm() {
 						<option value="title">book</option>
 						<option value="author">author</option>
 						<option value="subject">subject</option>
+						<option value="isbn">isbn</option>
 					</FormSelect>
 				</FloatingLabel>
 				<Button disabled={query == null || query.length < 3} type="submit">Search</Button>
