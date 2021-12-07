@@ -35,7 +35,7 @@ function SearchResults({ isLoggedIn }) {
 
     function calcPagination() {
         const page = searchParams.get("page");
-        const limit = searchResults ? searchResults.limit : 25;
+        const limit = searchParams.get("limit");
         const newOffset = Math.max(0, (page - 1) * limit);
         return new URLSearchParams({
             limit,
