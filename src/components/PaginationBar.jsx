@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 
 function PaginationBar({ result }) {
     const [searchParams, setSearchParams] = useSearchParams();
-    const page = Number(searchParams.get("page"));
+    const page = Math.max(1, Number(searchParams.get("page")));
     const { numFound, limit } = result;
     const lastPage = calcLastPage();
 
