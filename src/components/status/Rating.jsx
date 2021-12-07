@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Star from "./Star";
 import apiFacade from "../../apiFacade";
 
-function Rating({ bookId, status, mounted, isLoggedIn }) {
+function Rating({ bookId, mounted, isLoggedIn }) {
     const [rating, setRating] = useState();
     const [libraryItem, setLibraryItem] = useState();
     const [loaded, setLoaded] = useState(false);
@@ -14,14 +14,14 @@ function Rating({ bookId, status, mounted, isLoggedIn }) {
 
     useEffect(() => {
         if (libraryItem) {
-            setRating(libraryItem.rating);
+            setRating(libraryItem.rating ? libraryItem.rating : 0);
             setLoaded(true);
         }
     }, [libraryItem]);
 
 
     useEffect(() => {
-        if (loaded) apiFacade.editLibrary(bookId, rating, "unread", true);
+        if (loaded) apiFacade.editRating(bookId, rating, mounted);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [rating]);
 

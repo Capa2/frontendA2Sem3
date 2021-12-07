@@ -1,25 +1,31 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Image, ListGroup, ListGroupItem } from "react-bootstrap";
+import { Image, ListGroup, ListGroupItem, Row, Col } from "react-bootstrap";
 import LibraryBtn from "../components/LibraryBtn";
 import apiFacade from "../apiFacade";
-import Rating from "../components/rating/Rating";
-
+import Rating from "../components/status/Rating";
+import Status from "../components/status/Status";
 export default function LibraryPage({ user }) {
     const [library, setLibrary] = useState();
     const navigate = useNavigate();
     const mounted = useRef(true);
     function LibraryItem({ item }) {
         return (
-            <ListGroupItem>
-                <Image src={item.book.thumbnail_urls[1]} className="float-start me-2" thumbnail onClick={() => navigate(`/book/${item.book.key}`)} />
-                <h3>{item.book.title}</h3>
-                <p>by: {item.book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
-                <p>First published in: {item.book.first_publish_year}</p>
-                <p>Status: {item.status}</p>
-                <Rating bookId={item.book.key} status={item.status} mounted={mounted} isLoggedIn={!!user} />
-                <LibraryBtn bookId={item.book.key} isLoggedIn={!!user} passedLibrary={library} />
-            </ListGroupItem>
+            <Row className="my-2">
+                <Col xs={5} md={4} lg={3}>
+                    <Image fluid src={item.book.thumbnail_urls[2]} thumbnail onClick={() => navigate(`/book/${item.book.key}`)} />
+                </Col>
+                <Col  xs={7} md={8} lg={9}>
+                    <ListGroupItem className="h-100">
+                        <h3>{item.book.title}</h3>
+                        <p>by: {item.book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
+                        <p>First published in: {item.book.first_publish_year}</p>
+                        <Status bookId={item.book.key} mounted={mounted} isLoggedIn={!!user} />
+                        <Rating bookId={item.book.key} mounted={mounted} isLoggedIn={!!user} />
+                        <LibraryBtn bookId={item.book.key} isLoggedIn={!!user} passedLibrary={library} />
+                    </ListGroupItem>
+                </Col>
+            </Row>
         )
     }
     useEffect(() => {

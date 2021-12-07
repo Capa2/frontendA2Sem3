@@ -25,17 +25,18 @@ function getLibraryItem(key, setItem, mounted) {
     fetchData(`${SERVER_URL}/api/library/get/${key}`, "GET", setItem, mounted, true);
 }
 
-function editLibrary(key, rating, status, mounted) {
+function editRating(key, rating, mounted) {
     function tellMe(res) {
-        console.log({ res }); // TODO: validate
+        //console.log({ res }); // TODO: validate
     }
-    const body = {
-        "bookKey": key,
-        "rating": rating,
-        "status": status,
-    }
+    fetchData(`${SERVER_URL}/api/library/edit/${key}/rating/${rating}`, "PUT", tellMe, mounted, true);
+}
 
-    fetchData(`${SERVER_URL}/api/library/edit/${key}`, "PUT", tellMe, mounted, true, body);
+function editStatus(key, status, mounted) {
+    function tellMe(res) {
+        //console.log({ res }); // TODO: validate
+    }
+    fetchData(`${SERVER_URL}/api/library/edit/${key}/status/${status}`, "PUT", tellMe, mounted, true);
 }
 
 function delFromLibrary(key, setExists, mounted) {
@@ -59,7 +60,8 @@ const apiFacade = {
     fetchBookDetails,
     fetchUserPage,
     getLibraryItem,
-    editLibrary,
+    editRating,
+    editStatus,
     addToLibrary,
     delFromLibrary,
     fetchLibrary,

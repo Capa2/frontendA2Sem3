@@ -1,11 +1,11 @@
-import { Row, Col, Image, FormSelect } from "react-bootstrap";
+import { Row, Col, Image } from "react-bootstrap";
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import Rating from "../components/rating/Rating";
+import Rating from "../components/status/Rating";
 import apiFacade from "../apiFacade";
 import LibraryBtn from "../components/LibraryBtn";
+import Status from "../components/status/Status";
 function BookPage({ isLoggedIn }) {
-    const [status, setStatus] = useState();
     const [book, setBook] = useState();
     const { key } = useParams();
     const mounted = useRef(true);
@@ -14,10 +14,6 @@ function BookPage({ isLoggedIn }) {
         apiFacade.fetchBookDetails(key, setBook, mounted);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-
-    useEffect(() => {
-        //TODO: do status stuff but also put it in a component
-    }, [status]);
 
     useEffect(() => {
         return () => mounted.current = false;
@@ -45,19 +41,8 @@ function BookPage({ isLoggedIn }) {
                         <p>{book.number_of_pages_median} pages</p>
                         <p>Released: {book.first_publish_year}</p>
                         <p>{book.edition_name} {book.physical_format && `(${book.physical_format})`}</p>
-                        <FormSelect
-                            name="status"
-                            value={status}
-                            aria-label="book status"
-                            onChange={e => setStatus(e.target.value)}
-                            className="my-2"
-                        >
-                            <option value="none">status</option>
-                            <option value="wantTo">want to read</option>
-                            <option value="reading">reading</option>
-                            <option value="read">read</option>
-                        </FormSelect>
-                        <Rating bookId={key} status={status} mounted={mounted} isLoggedIn={isLoggedIn} />
+                        <Status bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} />
+                        <Rating bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} />
                         <LibraryBtn bookId={book.key} isLoggedIn={isLoggedIn} />
                     </Col>
                     <Row>
