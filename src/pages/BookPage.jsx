@@ -12,6 +12,7 @@ function BookPage({ isLoggedIn }) {
 
     useEffect(() => {
         apiFacade.fetchBookDetails(key, setBook, mounted);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -21,10 +22,6 @@ function BookPage({ isLoggedIn }) {
     useEffect(() => {
         return () => mounted.current = false;
     }, []);
-
-    useEffect(() => {
-        //console.log(book);
-    }, [book]);
 
     if (!book) return <h2>Loading {key} ...</h2>;
 
@@ -42,8 +39,8 @@ function BookPage({ isLoggedIn }) {
                 <Row>
                     <Col>
                         <h1>{book.title}</h1>
-                        {book.subtitle && <h4><small class="text-muted">{book.subtitle}</small></h4>}
-                        <h4><small class="text-muted">{book.series.map((s, i) => [i > 0 && ", ", s])}</small></h4>
+                        {book.subtitle && <h4><small className="text-muted">{book.subtitle}</small></h4>}
+                        <h4><small className="text-muted">{book.series.map((s, i) => [i > 0 && ", ", s])}</small></h4>
                         <p>By: {book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
                         <p>{book.number_of_pages_median} pages</p>
                         <p>Released: {book.first_publish_year}</p>

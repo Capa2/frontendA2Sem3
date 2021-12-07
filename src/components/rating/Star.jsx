@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import starImg from '../../img/star/starImg.png';
 import nostarImg from '../../img/star/nostarImg.png';
 import { Image } from "react-bootstrap";

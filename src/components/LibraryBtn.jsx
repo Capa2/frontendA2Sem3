@@ -21,6 +21,7 @@ function LibraryBtn({ bookId, isLoggedIn, passedLibrary }) {
             setLibrary(passedLibrary);
             setIsLoaded(true);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [passedLibrary]);
 
     useEffect(() => {
@@ -29,15 +30,16 @@ function LibraryBtn({ bookId, isLoggedIn, passedLibrary }) {
         } else {
 
             for (var i = 0; i <= library.size; i++) { // note <= final loop set false
-                if (i == library.size) {
+                if (i === library.size) {
                     setExists(false);
-                } else if (library.library[i].book.key == bookId) {
+                } else if (library.library[i].book.key === bookId) {
                     setExists(true);
                     break;
                 }
             }
             setIsLoaded(true);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [library, bookId]);
 
     function addToLibrary() {

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Image, ListGroup, ListGroupItem, Button } from "react-bootstrap";
+import { Image, ListGroup, ListGroupItem } from "react-bootstrap";
 import LibraryBtn from "../components/LibraryBtn";
 import apiFacade from "../apiFacade";
 

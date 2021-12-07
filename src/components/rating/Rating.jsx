@@ -6,7 +6,8 @@ function Rating({ bookId, initRating, status }) {
     var [rating, setRating] = useState(initRating);
 
     useEffect(() => {
-        apiFacade.editLibrary(bookId, rating, status, true);
+        if (!!rating) apiFacade.editLibrary(bookId, rating, status, true);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [rating]);
 
     return (
