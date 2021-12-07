@@ -3,6 +3,7 @@ import { Image, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import apiFacade from "../../apiFacade";
 import LibraryBtn from "../LibraryBtn";
+import PaginationBar from "../PaginationBar";
 import ResultStatus from "./ResultStatus";
 
 function SearchResults({ isLoggedIn }) {
@@ -36,9 +37,11 @@ function SearchResults({ isLoggedIn }) {
         setSearchResults(null);
         function buildQueryFromParams() {
             const query = searchParams.get("query");
-            const filter = searchParams.get("filter");
-            if (filter === "none" || filter === "null" || !filter) return query;
-            return filter + ":" + query;
+            let filter = searchParams.get("filter");
+            filter = !(filter === "none" || filter === "null" || !filter) ? `${filter}:` : "";
+            let offset = searchParams.get("offset");
+            offset = offset != null ? `?offset=${offset}` : "";
+            return filter + query + offset;
         }
         if (searchParams.has("query")) apiFacade.fetchSearchResults(buildQueryFromParams(searchParams), setSearchResults, mounted);
     }, [searchParams]);
@@ -50,6 +53,7 @@ function SearchResults({ isLoggedIn }) {
     return (
         <div>
             <ResultStatus result={searchResults} />
+            <PaginationBar result={searchResults} />
             <ListGroup>
                 {searchResults.results.map(r => <SingleResult key={r.key} result={r} />)}
             </ListGroup>
