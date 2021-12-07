@@ -14,7 +14,7 @@ export default function SearchForm() {
 	});
 	const [limit, setLimit] = useState(() => {
 		const limit = searchParams.get("limit");
-		return limit ? limit : "";
+		return limit ? limit : 15;
 	});
 
 	function handleSubmit(event) {
@@ -59,8 +59,9 @@ export default function SearchForm() {
 				<FormSelect
 					className="w-25"
 					name="limit"
-					defaultValue={15}
 					value={limit}
+					// default value is set at the top where limit is initialised.
+					// defaultValue didn't work because of value overwriting it, the url params being set based on limit state, and limit is only updated onChange
 					aria-label="result limit per page"
 					onChange={e => setLimit(e.target.value)}
 				>
