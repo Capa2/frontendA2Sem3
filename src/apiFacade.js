@@ -23,10 +23,15 @@ function addToLibrary(key, setExists, mounted) {
 
 function editLibrary(key, rating, status, mounted) {
     function tellMe(res) {
-        console.log({res}); // TODO: validate
+        console.log({ res }); // TODO: validate
     }
-    fetchData(`${SERVER_URL}/api/library/edit/${key}`, "PUT", tellMe, mounted, true);
+    const body = {
+        "bookKey": key,
+        "rating": rating,
+        "status": status,
+    }
 
+    fetchData(`${SERVER_URL}/api/library/edit/${key}`, "PUT", tellMe, mounted, true, body);
 }
 
 function delFromLibrary(key, setExists, mounted) {

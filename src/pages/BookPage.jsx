@@ -15,6 +15,10 @@ function BookPage({ isLoggedIn }) {
     }, []);
 
     useEffect(() => {
+        //TODO: do status stuff but also put it in a component
+    }, [status]);
+
+    useEffect(() => {
         return () => mounted.current = false;
     }, []);
 
