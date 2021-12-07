@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Image, ListGroup, ListGroupItem } from "react-bootstrap";
 import LibraryBtn from "../components/LibraryBtn";
 import apiFacade from "../apiFacade";
+import Rating from "../components/rating/Rating";
 
 export default function LibraryPage({ user }) {
     const [library, setLibrary] = useState();
@@ -16,12 +17,11 @@ export default function LibraryPage({ user }) {
                 <p>by: {item.book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
                 <p>First published in: {item.book.first_publish_year}</p>
                 <p>Status: {item.status}</p>
-                <p>Rating: {item.rating}/5</p>
+                <Rating bookId={item.book.key} status={item.status} mounted={mounted} isLoggedIn={!!user} />
                 <LibraryBtn bookId={item.book.key} isLoggedIn={!!user} passedLibrary={library} />
             </ListGroupItem>
         )
     }
-    //<Button value={item.book.key} onClick={delFromLibrary} disabled={deleted}>{!deleted ? "Delete from library" : "Deleted"}</Button>
     useEffect(() => {
         apiFacade.fetchLibrary(setLibrary, mounted);
         return () => mounted.current = false;

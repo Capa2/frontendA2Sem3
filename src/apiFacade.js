@@ -14,11 +14,15 @@ function fetchUserPage(setContent, mounted) {
 }
 
 function addToLibrary(key, setExists, mounted) {
-    function tellMe() {
+    function added() {
         setExists(true); // TODO: validate add to library
     }
-    fetchData(`${SERVER_URL}/api/library/add/${key}`, "POST", tellMe, mounted, true);
+    fetchData(`${SERVER_URL}/api/library/add/${key}`, "POST", added, mounted, true);
 
+}
+
+function getLibraryItem(key, setItem, mounted) {
+    fetchData(`${SERVER_URL}/api/library/get/${key}`, "GET", setItem, mounted, true);
 }
 
 function editLibrary(key, rating, status, mounted) {
@@ -54,6 +58,7 @@ const apiFacade = {
     fetchSearchResults,
     fetchBookDetails,
     fetchUserPage,
+    getLibraryItem,
     editLibrary,
     addToLibrary,
     delFromLibrary,

@@ -57,7 +57,7 @@ function BookPage({ isLoggedIn }) {
                             <option value="reading">reading</option>
                             <option value="read">read</option>
                         </FormSelect>
-                        <Rating bookId={key} initRating="0" status={status} />
+                        <Rating bookId={key} status={status} mounted={mounted} isLoggedIn={isLoggedIn} />
                         <LibraryBtn bookId={book.key} isLoggedIn={isLoggedIn} />
                     </Col>
                     <Row>
