@@ -13,7 +13,7 @@ function PaginationBar({ result }) {
     }
 
     function goToPreviousPage() {
-        searchParams.set("page", page - 1);
+        searchParams.set("page", Math.min(page - 1, lastPage));
         setSearchParams(searchParams);
     }
 
