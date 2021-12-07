@@ -33,17 +33,27 @@ function SearchResults({ isLoggedIn }) {
         return () => mounted.current = false;
     }, []);
 
+    function calcPagination() {
+        const page = searchParams.get("page");
+        const limit = searchResults ? searchResults.limit : 25;
+        const newOffset = Math.max(0, (page - 1) * limit);
+        return new URLSearchParams({
+            limit,
+            "offset": newOffset
+        }).toString();
+    }
+
     useEffect(() => {
         setSearchResults(null);
         function buildQueryFromParams() {
             const query = searchParams.get("query");
             let filter = searchParams.get("filter");
             filter = !(filter === "none" || filter === "null" || !filter) ? `${filter}:` : "";
-            let offset = searchParams.get("offset");
-            offset = offset != null ? `?offset=${offset}` : "";
-            return filter + query + offset;
+            const paginationString = calcPagination();
+            console.log(paginationString);
+            return filter + query + `?${paginationString}`;
         }
-        if (searchParams.has("query")) apiFacade.fetchSearchResults(buildQueryFromParams(searchParams), setSearchResults, mounted);
+        if (searchParams.has("query")) apiFacade.fetchSearchResults(buildQueryFromParams(), setSearchResults, mounted);
     }, [searchParams]);
 
     if (!searchResults) {
@@ -53,7 +63,7 @@ function SearchResults({ isLoggedIn }) {
     return (
         <div>
             <ResultStatus result={searchResults} />
-            <PaginationBar result={searchResults} />
+            <PaginationBar />
             <ListGroup>
                 {searchResults.results.map(r => <SingleResult key={r.key} result={r} />)}
             </ListGroup>

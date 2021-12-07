@@ -1,26 +1,24 @@
 import { Pagination } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
 
-function PaginationBar({ result }) {
+function PaginationBar() {
     const [searchParams, setSearchParams] = useSearchParams();
-    const { limit, offset } = result;
+    const page = Number(searchParams.get("page"));
 
     function goToPreviousPage() {
-        let newOffset = Math.max(0, offset - limit);
-        searchParams.set("offset", newOffset);
+        searchParams.set("page", page - 1);
         setSearchParams(searchParams);
     }
 
     function goToNextPage() {
-        let newOffset = offset + limit;
-        searchParams.set("offset", newOffset);
+        searchParams.set("page", page + 1);
         setSearchParams(searchParams);
     }
 
     return (
         <div>
             <Pagination>
-                <Pagination.Prev disabled={offset === 0} onClick={goToPreviousPage} />
+                <Pagination.Prev disabled={!page || page <= 1} onClick={goToPreviousPage} />
                 <Pagination.Next onClick={goToNextPage} />
             </Pagination>
         </div>
