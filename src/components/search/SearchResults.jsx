@@ -62,7 +62,7 @@ function SearchResults({ isLoggedIn }) {
     return (
         <div>
             <ResultStatus result={searchResults} />
-            <PaginationBar />
+            <PaginationBar result={searchResults} />
             <ListGroup>
                 {searchResults.results.map(r => <SingleResult key={r.key} result={r} />)}
             </ListGroup>
