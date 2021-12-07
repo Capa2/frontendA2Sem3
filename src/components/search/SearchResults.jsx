@@ -50,7 +50,6 @@ function SearchResults({ isLoggedIn }) {
             let filter = searchParams.get("filter");
             filter = !(filter === "none" || filter === "null" || !filter) ? `${filter}:` : "";
             const paginationString = calcPagination();
-            console.log(paginationString);
             return filter + query + `?${paginationString}`;
         }
         if (searchParams.has("query")) apiFacade.fetchSearchResults(buildQueryFromParams(), setSearchResults, mounted);

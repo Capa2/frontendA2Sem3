@@ -5,6 +5,11 @@ function PaginationBar() {
     const [searchParams, setSearchParams] = useSearchParams();
     const page = Number(searchParams.get("page"));
 
+    function goToFirstPage() {
+        searchParams.set("page", 1);
+        setSearchParams(searchParams);
+    }
+
     function goToPreviousPage() {
         searchParams.set("page", page - 1);
         setSearchParams(searchParams);
@@ -15,10 +20,15 @@ function PaginationBar() {
         setSearchParams(searchParams);
     }
 
+    function isFirstPage() {
+        return !page || page <= 1;
+    }
+
     return (
         <div>
             <Pagination>
-                <Pagination.Prev disabled={!page || page <= 1} onClick={goToPreviousPage} />
+                <Pagination.First disabled={isFirstPage()} onClick={goToFirstPage} />
+                <Pagination.Prev disabled={isFirstPage()} onClick={goToPreviousPage} />
                 <Pagination.Next onClick={goToNextPage} />
             </Pagination>
         </div>
