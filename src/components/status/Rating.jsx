@@ -12,7 +12,11 @@ function Rating({ bookId, mounted, isLoggedIn, inLibrary }) {
     }, [inLibrary]);
 
     useEffect(() => {
-        if (inLibrary && rating != undefined) apiFacade.editRating(bookId, rating, mounted);
+        if (inLibrary && rating != undefined) {
+            apiFacade.editRating(bookId, rating, mounted);
+            inLibrary.rating = rating;
+            // this assumes things go well
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [rating]);
 
