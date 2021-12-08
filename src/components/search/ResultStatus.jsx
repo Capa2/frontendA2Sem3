@@ -15,7 +15,7 @@ export default function ResultStatus({ searchResult }) {
     }
 
     return (
-        <strong>{status}</strong>
+        <strong className="my-1 d-inline-block">{status}</strong>
     );
 
 }

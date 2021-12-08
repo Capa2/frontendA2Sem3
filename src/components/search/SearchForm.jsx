@@ -1,21 +1,8 @@
-import { useState } from "react";
-import { Button, Form, FormControl, FormSelect, InputGroup, FloatingLabel, FormGroup, FormLabel } from "react-bootstrap";
+import { Button, Form, FormControl, FormSelect, InputGroup, FloatingLabel } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
 
-export default function SearchForm() {
+export default function SearchForm({query, setQuery, filter, setFilter, limit}) {
 	const [searchParams, setSearchParams] = useSearchParams();
-	const [query, setQuery] = useState(() => {
-		const query = searchParams.get("query");
-		return query ? query : "";
-	});
-	const [filter, setFilter] = useState(() => {
-		const filter = searchParams.get("filter");
-		return filter ? filter : "";
-	});
-	const [limit, setLimit] = useState(() => {
-		const limit = searchParams.get("limit");
-		return limit ? limit : 15;
-	});
 
 	function handleSubmit(event) {
 		event.preventDefault();
@@ -54,22 +41,6 @@ export default function SearchForm() {
 				</FloatingLabel>
 				<Button disabled={query == null || query.length < 3} type="submit">Search</Button>
 			</InputGroup>
-			<FormGroup controlId="limit">
-				<FormLabel>Results per page</FormLabel>
-				<FormSelect
-					className="w-25"
-					name="limit"
-					value={limit}
-					// default value is set at the top where limit is initialised.
-					// defaultValue didn't work because of value overwriting it, the url params being set based on limit state, and limit is only updated onChange
-					aria-label="result limit per page"
-					onChange={e => setLimit(e.target.value)}
-				>
-					<option value={5}>5</option>
-					<option value={15}>15</option>
-					<option value={25}>25</option>
-				</FormSelect>
-			</FormGroup>
 		</Form>
 	);
 }
