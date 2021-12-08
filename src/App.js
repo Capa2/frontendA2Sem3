@@ -29,6 +29,7 @@ export default function App() {
     if (loggedInState) setLoggedInState(false);
     logout();
     setUserState(null);
+    setLibrary(null);
     navigate("/");
   }
 
