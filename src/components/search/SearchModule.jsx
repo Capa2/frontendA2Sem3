@@ -42,7 +42,7 @@ function SearchModule({ isLoggedIn }) {
             <Row>
                 <Col><ResultStatus searchResult={searchResult} /></Col>
                 <Col><PaginationBar searchResult={searchResult} /></Col>
-                <Col><ResultLimiter query={query} filter={filter} limit={limit} setLimit={setLimit} /></Col>
+                <Col><ResultLimiter limit={limit} setLimit={setLimit} /></Col>
             </Row>
             <Row><SearchResults library={library} searchResult={searchResult} setSearchResult={setSearchResult} isLoggedIn={isLoggedIn} /></Row>
         </>

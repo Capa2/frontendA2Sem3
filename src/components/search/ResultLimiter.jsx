@@ -3,23 +3,19 @@ import { useSearchParams } from "react-router-dom";
 import { FormSelect, FormGroup, FormLabel, Row, Col } from "react-bootstrap";
 
 
-function ResultLimiter({ query, filter, limit, setLimit }) {
+function ResultLimiter({limit, setLimit }) {
     const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
-        if (query) setSearchParams(
-            {
-                "query": query,
-                "filter": filter,
-                "limit": limit
-            });
+        searchParams.set("limit", limit);
+        setSearchParams(searchParams);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [limit]);
 
     return (
         <FormGroup controlId="limit">
             <Row>
-                <Col xs="8" clasName="text-end">
+                <Col xs="8" className="text-end">
                     <FormLabel className="d-block my-1 text-end fw-bold">Results per page</FormLabel>
                 </Col>
                 <Col xs="4">
