@@ -39,11 +39,46 @@ function PaginationBar({ result }) {
         return page >= lastPage;
     }
 
+    function goToPage(event) {
+        const number = event.target.innerHTML;
+        console.log(event.target.active)
+        if (!event.target.active) {
+            searchParams.set("page", event.target.innerHTML);
+            setSearchParams(searchParams);
+        }
+    }
+
+    function SinglePageBtn({ number }) {
+        return (
+            <>
+                {number != page && number >= 1 && number <= lastPage &&
+                    <Pagination.Item onClick={goToPage}>{number}</Pagination.Item>
+                }
+                {number == page &&
+                    <Pagination.Item active>{number}</Pagination.Item>
+                }
+            </>
+        )
+    }
+
+    function NumberedPages() {
+        return (
+            <>
+                <SinglePageBtn number={page - 2} />
+                <SinglePageBtn number={page - 1} />
+                <SinglePageBtn number={page} />
+                <SinglePageBtn number={page + 1} />
+                <SinglePageBtn number={page + 2} />
+            </>
+        );
+    }
+
     return (
         <div>
             <Pagination>
                 <Pagination.First disabled={isFirstPage()} onClick={goToFirstPage} />
                 <Pagination.Prev disabled={isFirstPage()} onClick={goToPreviousPage} />
+                <NumberedPages />
                 <Pagination.Next disabled={isLastPage()} onClick={goToNextPage} />
                 <Pagination.Last disabled={isLastPage()} onClick={goToLastPage} />
             </Pagination>
