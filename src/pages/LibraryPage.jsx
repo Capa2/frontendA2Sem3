@@ -16,14 +16,14 @@ export default function LibraryPage({ user }) {
                     <Image fluid src={item.book.thumbnail_urls[2]} thumbnail onClick={() => navigate(`/book/${item.book.key}`)} />
                 </Col>
                 <Col  xs={7} md={8} lg={9}>
-                    <ListGroupItem className="h-100">
+                    <div className="h-100">
                         <h3>{item.book.title}</h3>
-                        <p>by: {item.book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
-                        <p>First published in: {item.book.first_publish_year}</p>
+                        <p key="pAuthor">by: {item.book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
+                        <p key="pPublished">First published in: {item.book.first_publish_year}</p>
                         <Status bookId={item.book.key} mounted={mounted} isLoggedIn={!!user} />
                         <Rating bookId={item.book.key} mounted={mounted} isLoggedIn={!!user} />
-                        <LibraryBtn bookId={item.book.key} isLoggedIn={!!user} passedLibrary={library} />
-                    </ListGroupItem>
+                        <LibraryBtn key={item.book.key} isLoggedIn={!!user} passedLibrary={library} />
+                    </div>
                 </Col>
             </Row>
         )

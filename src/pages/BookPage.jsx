@@ -5,6 +5,7 @@ import Rating from "../components/status/Rating";
 import apiFacade from "../apiFacade";
 import LibraryBtn from "../components/LibraryBtn";
 import Status from "../components/status/Status";
+import BackBtn from "../components/BackBtn";
 function BookPage({ isLoggedIn }) {
     const [book, setBook] = useState();
     const { key } = useParams();
@@ -43,6 +44,7 @@ function BookPage({ isLoggedIn }) {
                         <p>{book.edition_name} {book.physical_format && `(${book.physical_format})`}</p>
                         <Status bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} />
                         <Rating bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} />
+                        <BackBtn />
                         <LibraryBtn bookId={book.key} isLoggedIn={isLoggedIn} />
                     </Col>
                     <Row>
