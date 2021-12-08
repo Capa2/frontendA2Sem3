@@ -8,7 +8,7 @@ function Status({ bookId, mounted, isLoggedIn }) {
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        apiFacade.getLibraryItem(bookId, setLibraryItem, mounted);
+        if (isLoggedIn) apiFacade.getLibraryItem(bookId, setLibraryItem, mounted);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 

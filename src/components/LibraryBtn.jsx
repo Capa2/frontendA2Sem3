@@ -13,8 +13,7 @@ function LibraryBtn({ bookId, isLoggedIn, passedLibrary }) {
     }, []);
 
     useEffect(() => {
-        if (!passedLibrary) {
-            console.log("I am a button and I fetched Lib myself");
+        if (!passedLibrary && isLoggedIn) {
             apiFacade.fetchLibrary(setLibrary, mounted);
         }
         else {
@@ -28,7 +27,6 @@ function LibraryBtn({ bookId, isLoggedIn, passedLibrary }) {
         if (!library || !bookId) {
             setIsLoaded(false);
         } else {
-
             for (var i = 0; i <= library.size; i++) { // note <= final loop set false
                 if (i === library.size) {
                     setExists(false);
@@ -43,12 +41,14 @@ function LibraryBtn({ bookId, isLoggedIn, passedLibrary }) {
     }, [library, bookId]);
 
     function addToLibrary() {
-        apiFacade.addToLibrary(bookId, setExists, mounted);
+        if (isLoggedIn) apiFacade.addToLibrary(bookId, setExists, mounted);
     }
 
     function delFromLibrary() {
-        apiFacade.delFromLibrary(bookId, setExists, mounted);
+        if (isLoggedIn) apiFacade.delFromLibrary(bookId, setExists, mounted);
     }
+
+    if (!isLoggedIn) return null;
 
     return (
         <Button value={bookId} disabled={!IsLoaded || !isLoggedIn} onClick={!exists ? addToLibrary : delFromLibrary}>
