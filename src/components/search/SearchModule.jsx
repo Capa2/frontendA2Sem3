@@ -39,12 +39,17 @@ function SearchModule({ isLoggedIn }) {
             <Row>
                 <SearchForm query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} limit={limit} />
             </Row>
-            <Row>
+            {searchResult && <Row>
                 <Col><ResultStatus searchResult={searchResult} /></Col>
                 <Col><PaginationBar searchResult={searchResult} /></Col>
                 <Col><ResultLimiter limit={limit} setLimit={setLimit} /></Col>
-            </Row>
+            </Row>}
             <Row><SearchResults library={library} searchResult={searchResult} setSearchResult={setSearchResult} isLoggedIn={isLoggedIn} /></Row>
+            {searchResult && <Row className="mt-2">
+                <Col><ResultStatus searchResult={searchResult} /></Col>
+                <Col><PaginationBar searchResult={searchResult} /></Col>
+                <Col><ResultLimiter limit={limit} setLimit={setLimit} /></Col>
+            </Row>}
         </>
     );
 }

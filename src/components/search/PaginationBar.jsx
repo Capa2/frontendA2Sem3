@@ -62,14 +62,20 @@ function PaginationBar({ searchResult }) {
     function NumberedPages() {
         return (
             <>
+                {page >= calcLastPage() && page > 5 && <SinglePageBtn disabled={!searchResult} number={page - 4} />}
+                {page >= calcLastPage() - 1 && page > 5 && <SinglePageBtn disabled={!searchResult} number={page - 3} />}
                 <SinglePageBtn disabled={!searchResult} number={page - 2} />
                 <SinglePageBtn disabled={!searchResult} number={page - 1} />
                 <SinglePageBtn disabled={!searchResult} number={page} />
                 <SinglePageBtn disabled={!searchResult} number={page + 1} />
                 <SinglePageBtn disabled={!searchResult} number={page + 2} />
+                {page <= 2 && <SinglePageBtn disabled={!searchResult} number={page + 3} />}
+                {page <= 1 && <SinglePageBtn disabled={!searchResult} number={page + 4} />}
             </>
         );
     }
+
+    if (!searchResult) return null;
 
     return (
         <div>
