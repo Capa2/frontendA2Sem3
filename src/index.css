@@ -98,11 +98,11 @@
         width:66% !important;
     }
 
-    .list-group-item p:nth-child(6) { /* give it a class instead */
+    .subjects { /* give it a class instead */
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 4;
+        -webkit-line-clamp: 6;
       
     }

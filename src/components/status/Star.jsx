@@ -11,7 +11,7 @@ function Star({ index, rating, callback }) {
     }
 
     return (
-        <Image src={onOff ? starImg : nostarImg} className="m-2" height="auto" width="25px" alt="star" onClick={click} />
+        <Image src={onOff ? starImg : nostarImg} className="mx-1" height="auto" width="32px" alt="star" onClick={click} />
     );
 }
 
