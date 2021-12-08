@@ -72,7 +72,7 @@ export default function App() {
           <Route path="/login" element={<LoginPage login={loginProtocol} />} />
           <Route path="/logout" element={<LogoutPage logout={logoutProtocol} />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/book/:key" element={<BookPage isLoggedIn={loggedInState} />} />
+          <Route path="/book/:key" element={<BookPage isLoggedIn={loggedInState} library={library} />} />
           <Route path="*" element={<NoMatchPage />} />
         </Routes>
       </Container>

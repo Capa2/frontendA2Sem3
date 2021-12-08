@@ -2,30 +2,22 @@ import { useEffect, useState } from "react";
 import { FormSelect } from "react-bootstrap";
 import apiFacade from "../../apiFacade";
 
-function Status({ bookId, mounted, isLoggedIn }) {
+function Status({ bookId, mounted, isLoggedIn, inLibrary }) {
     const [status, setStatus] = useState();
-    const [libraryItem, setLibraryItem] = useState();
-    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        if (isLoggedIn) apiFacade.getLibraryItem(bookId, setLibraryItem, mounted);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        if (libraryItem) {
-            setStatus(libraryItem.status ? libraryItem.status : "not");
-            setLoaded(true);
+        if (inLibrary) {
+            setStatus(inLibrary.status);
         }
-    }, [libraryItem]);
+    }, [inLibrary]);
 
 
     useEffect(() => {
-        if (loaded) apiFacade.editStatus(bookId, status, mounted);
+        if (inLibrary) apiFacade.editStatus(bookId, status, mounted);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status]);
 
-    if (!isLoggedIn) return null;
+    if (!isLoggedIn || !inLibrary) return null;
 
     return (
         <FormSelect
