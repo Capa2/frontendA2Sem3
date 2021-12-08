@@ -1,14 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Image, ListGroup, ListGroupItem, Row, Col } from "react-bootstrap";
 import LibraryBtn from "../components/LibraryBtn";
-import apiFacade from "../apiFacade";
 import Rating from "../components/status/Rating";
 import Status from "../components/status/Status";
 export default function LibraryPage({ user, library }) {
-    // const [library, setLibrary] = useState();
     const navigate = useNavigate();
     const mounted = useRef(true);
+
     function LibraryItem({ item }) {
         return (
             <Row className="my-2">
@@ -22,16 +21,12 @@ export default function LibraryPage({ user, library }) {
                         <p>First published in: {item.book.first_publish_year}</p>
                         <Status bookId={item.book.key} mounted={mounted} isLoggedIn={!!user} inLibrary={item} />
                         <Rating bookId={item.book.key} mounted={mounted} isLoggedIn={!!user} />
-                        <LibraryBtn bookId={item.book.key} isLoggedIn={!!user} passedLibrary={library} />
+                        <LibraryBtn bookId={item.book.key} isLoggedIn={!!user} isLoaded={true} inLibrary={item} />
                     </ListGroupItem>
                 </Col>
             </Row>
         )
     }
-    // useEffect(() => {
-    //     apiFacade.fetchLibrary(setLibrary, mounted);
-    //     return () => mounted.current = false;
-    // }, []);
 
     if (!user) {
         return <h1>Please login</h1>
