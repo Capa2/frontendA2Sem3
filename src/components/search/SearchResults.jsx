@@ -35,7 +35,7 @@ function SearchResults({ isLoggedIn }) {
 
     function calcPagination() {
         const page = searchParams.get("page");
-        const limit = searchResults ? searchResults.limit : 25;
+        const limit = searchParams.get("limit");
         const newOffset = Math.max(0, (page - 1) * limit);
         return new URLSearchParams({
             limit,
@@ -62,7 +62,7 @@ function SearchResults({ isLoggedIn }) {
     return (
         <div>
             <ResultStatus result={searchResults} />
-            <PaginationBar />
+            <PaginationBar result={searchResults} />
             <ListGroup>
                 {searchResults.results.map(r => <SingleResult key={r.key} result={r} />)}
             </ListGroup>
