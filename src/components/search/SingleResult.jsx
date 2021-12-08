@@ -2,7 +2,7 @@ import { useNavigate } from "react-router";
 import { Image, ListGroupItem } from "react-bootstrap";
 import LibraryBtn from "../LibraryBtn";
 
-function SingleResult({ singleResult, isLoggedIn }) {
+function SingleResult({ singleResult, isLoggedIn, inLibrary }) {
     const navigate = useNavigate();
     return (
         <ListGroupItem>
@@ -12,7 +12,7 @@ function SingleResult({ singleResult, isLoggedIn }) {
             <p>First published in: {singleResult.first_publish_year}</p>
             <p>Page count: {singleResult.number_of_pages_median}</p>
             <p>{singleResult.subjects.map((s, i) => [i > 0 && ", ", <a href="/" key={s.key}>{s.name}</a>])}</p>
-            <LibraryBtn bookId={singleResult.key} isLoggedIn={isLoggedIn} />
+            <LibraryBtn bookId={singleResult.key} isLoggedIn={isLoggedIn} inLibrary={inLibrary} />
         </ListGroupItem>
     )
 }

@@ -5,16 +5,8 @@ import SearchForm from "./SearchForm";
 import PaginationBar from "./PaginationBar";
 import ResultStatus from "./ResultStatus";
 
-function SearchModule({ isLoggedIn }) {
-    const mounted = useRef(true);
-    const [library, setLibrary] = useState();
+function SearchModule({ isLoggedIn, library }) {
     const [searchResult, setSearchResult] = useState();
-
-    useEffect(() => {
-        if (isLoggedIn) apiFacade.fetchLibrary(setLibrary, mounted);
-        return () => mounted.current = false;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     return (
         <>

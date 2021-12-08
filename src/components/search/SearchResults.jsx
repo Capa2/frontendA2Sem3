@@ -5,7 +5,7 @@ import apiFacade from "../../apiFacade";
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 
-function SearchResults({ searchResult, setSearchResult, isLoggedIn }) {
+function SearchResults({ searchResult, setSearchResult, isLoggedIn, library }) {
     const mounted = useRef(true);
     const [searchParams] = useSearchParams();
 
@@ -18,12 +18,16 @@ function SearchResults({ searchResult, setSearchResult, isLoggedIn }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchParams]);
 
+    function getLibraryItem(key) {
+        return library.library.find(item => item.book.key === key);
+    }
+
     if (!searchResult) return null;
 
     return (
         <>
             <ListGroup>
-                {searchResult.results.map(singleResult => <SingleResult key={singleResult.key} singleResult={singleResult} isLoggedIn={isLoggedIn} />)}
+                {searchResult.results.map(singleResult => <SingleResult key={singleResult.key} singleResult={singleResult} isLoggedIn={isLoggedIn} inLibrary={getLibraryItem(singleResult.key)} />)}
             </ListGroup>
         </>
     );

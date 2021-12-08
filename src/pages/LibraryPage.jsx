@@ -5,8 +5,8 @@ import LibraryBtn from "../components/LibraryBtn";
 import apiFacade from "../apiFacade";
 import Rating from "../components/status/Rating";
 import Status from "../components/status/Status";
-export default function LibraryPage({ user }) {
-    const [library, setLibrary] = useState();
+export default function LibraryPage({ user, library }) {
+    // const [library, setLibrary] = useState();
     const navigate = useNavigate();
     const mounted = useRef(true);
     function LibraryItem({ item }) {
@@ -15,7 +15,7 @@ export default function LibraryPage({ user }) {
                 <Col xs={5} md={4} lg={3}>
                     <Image fluid src={item.book.thumbnail_urls[2]} thumbnail onClick={() => navigate(`/book/${item.book.key}`)} />
                 </Col>
-                <Col  xs={7} md={8} lg={9}>
+                <Col xs={7} md={8} lg={9}>
                     <ListGroupItem className="h-100">
                         <h3>{item.book.title}</h3>
                         <p>by: {item.book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
@@ -28,10 +28,14 @@ export default function LibraryPage({ user }) {
             </Row>
         )
     }
-    useEffect(() => {
-        apiFacade.fetchLibrary(setLibrary, mounted);
-        return () => mounted.current = false;
-    }, []);
+    // useEffect(() => {
+    //     apiFacade.fetchLibrary(setLibrary, mounted);
+    //     return () => mounted.current = false;
+    // }, []);
+
+    if (!user) {
+        return <h1>Please login</h1>
+    }
 
     return (
         <div>
