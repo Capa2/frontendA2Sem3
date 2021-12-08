@@ -25,7 +25,7 @@ function Rating({ bookId, mounted, isLoggedIn }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [rating]);
 
-    if (!isLoggedIn) return null;
+    if (!isLoggedIn || !loaded) return null;
 
     return (
         <div className="W-100 my-4">

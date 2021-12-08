@@ -25,7 +25,7 @@ function Status({ bookId, mounted, isLoggedIn }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status]);
 
-    if (!isLoggedIn) return null;
+    if (!isLoggedIn || !loaded) return null;
 
     return (
         <FormSelect
