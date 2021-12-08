@@ -1,73 +1,31 @@
-import { useEffect, useRef, useState } from "react";
-import { Image, ListGroup, ListGroupItem } from "react-bootstrap";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { ListGroup } from "react-bootstrap";
+import SingleResult from "./SingleResult";
+import buildQueryFromParams from "./utils/queryBuilder";
 import apiFacade from "../../apiFacade";
-import LibraryBtn from "../LibraryBtn";
-import PaginationBar from "../PaginationBar";
-import ResultStatus from "./ResultStatus";
+import { useEffect, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 
-function SearchResults({ isLoggedIn }) {
-    const [searchParams] = useSearchParams();
-    const [searchResults, setSearchResults] = useState();
+function SearchResults({ searchResult, setSearchResult, isLoggedIn }) {
     const mounted = useRef(true);
-    const navigate = useNavigate();
-
-
-    function SingleResult({ result }) {
-
-        return (
-            <ListGroupItem>
-                <Image src={result.thumbnail_urls[1]} className="float-start me-2" thumbnail onClick={() => navigate(`/book/${result.key}`)} />
-                <h3>{result.title}</h3>
-                <p>by: {result.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
-                <p>First published in: {result.first_publish_year}</p>
-                <p>Page count: {result.number_of_pages_median}</p>
-                <p>{result.subjects.map((s, i) => [i > 0 && ", ", <a href="/" key={s.key}>{s.name}</a>])}</p>
-                <LibraryBtn bookId={result.key} isLoggedIn={isLoggedIn} />
-
-            </ListGroupItem>
-        )
-    }
+    const [searchParams] = useSearchParams();
 
     useEffect(() => {
         return () => mounted.current = false;
     }, []);
 
-    function calcPagination() {
-        const page = searchParams.get("page");
-        const limit = searchParams.get("limit");
-        const newOffset = Math.max(0, (page - 1) * limit);
-        return new URLSearchParams({
-            limit,
-            "offset": newOffset
-        }).toString();
-    }
-
     useEffect(() => {
-        setSearchResults(null);
-        function buildQueryFromParams() {
-            const query = searchParams.get("query");
-            let filter = searchParams.get("filter");
-            filter = !(filter === "none" || filter === "null" || !filter) ? `${filter}:` : "";
-            const paginationString = calcPagination();
-            return filter + query + `?${paginationString}`;
-        }
-        if (searchParams.has("query")) apiFacade.fetchSearchResults(buildQueryFromParams(), setSearchResults, mounted);
+        if (searchParams.has("query")) apiFacade.fetchSearchResults(buildQueryFromParams(searchParams), setSearchResult, mounted);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchParams]);
 
-    if (!searchResults) {
-        return <ResultStatus result={searchResults} />
-    }
+    if (!searchResult) return null;
 
     return (
-        <div>
-            <ResultStatus result={searchResults} />
-            <PaginationBar result={searchResults} />
+        <>
             <ListGroup>
-                {searchResults.results.map(r => <SingleResult key={r.key} result={r} />)}
+                {searchResult.results.map(singleResult => <SingleResult key={singleResult.key} singleResult={singleResult} isLoggedIn={isLoggedIn} />)}
             </ListGroup>
-            <PaginationBar result={searchResults} />
-        </div>
+        </>
     );
 }
 

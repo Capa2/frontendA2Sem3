@@ -1,21 +1,21 @@
 import { useSearchParams } from "react-router-dom";
 
-export default function ResultStatus({ result }) {
+export default function ResultStatus({ searchResult }) {
     const [searchParams] = useSearchParams();
     var status = "I am the status overwrite me";
 
     try {
-        if (result.numFound === 0) {
+        if (searchResult.numFound === 0) {
             status = "No results"
-        } else if (result.numFound > 0) {
-            status = result.numFound + " results";
+        } else if (searchResult.numFound > 0) {
+            status = searchResult.numFound + " results";
         }
     } catch {
         status = searchParams.has("query") ? "loading..." : "";
     }
 
     return (
-        <p>{status}</p>
+        <strong>{status}</strong>
     );
 
 }

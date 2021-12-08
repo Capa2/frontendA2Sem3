@@ -1,10 +1,11 @@
 import { Pagination } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
 
-function PaginationBar({ result }) {
+function PaginationBar({ searchResult }) {
     const [searchParams, setSearchParams] = useSearchParams();
     const page = Math.max(1, Number(searchParams.get("page")));
-    const { numFound, limit } = result;
+    const numFound = searchResult ? searchResult.numFound : 0;
+    const limit = searchResult ? searchResult.limit : 0;
     const lastPage = calcLastPage();
 
     function goToFirstPage() {
@@ -41,20 +42,17 @@ function PaginationBar({ result }) {
 
     function goToPage(event) {
         const number = event.target.innerHTML;
-        console.log(event.target.active)
-        if (!event.target.active) {
-            searchParams.set("page", event.target.innerHTML);
-            setSearchParams(searchParams);
-        }
+        searchParams.set("page", number);
+        setSearchParams(searchParams);
     }
 
-    function SinglePageBtn({ number }) {
+    function SinglePageBtn({ number, disabled }) {
         return (
             <>
-                {number != page && number >= 1 && number <= lastPage &&
-                    <Pagination.Item onClick={goToPage}>{number}</Pagination.Item>
+                {number !== page && number >= 1 && number <= lastPage &&
+                    <Pagination.Item disabled={disabled} onClick={goToPage}>{number}</Pagination.Item>
                 }
-                {number == page &&
+                {number === page &&
                     <Pagination.Item active>{number}</Pagination.Item>
                 }
             </>
@@ -64,11 +62,11 @@ function PaginationBar({ result }) {
     function NumberedPages() {
         return (
             <>
-                <SinglePageBtn number={page - 2} />
-                <SinglePageBtn number={page - 1} />
-                <SinglePageBtn number={page} />
-                <SinglePageBtn number={page + 1} />
-                <SinglePageBtn number={page + 2} />
+                <SinglePageBtn disabled={!searchResult} number={page - 2} />
+                <SinglePageBtn disabled={!searchResult} number={page - 1} />
+                <SinglePageBtn disabled={!searchResult} number={page} />
+                <SinglePageBtn disabled={!searchResult} number={page + 1} />
+                <SinglePageBtn disabled={!searchResult} number={page + 2} />
             </>
         );
     }
@@ -76,11 +74,11 @@ function PaginationBar({ result }) {
     return (
         <div>
             <Pagination>
-                <Pagination.First disabled={isFirstPage()} onClick={goToFirstPage} />
-                <Pagination.Prev disabled={isFirstPage()} onClick={goToPreviousPage} />
+                <Pagination.First disabled={!searchResult || isFirstPage()} onClick={goToFirstPage} />
+                <Pagination.Prev disabled={!searchResult || isFirstPage()} onClick={goToPreviousPage} />
                 <NumberedPages />
-                <Pagination.Next disabled={isLastPage()} onClick={goToNextPage} />
-                <Pagination.Last disabled={isLastPage()} onClick={goToLastPage} />
+                <Pagination.Next disabled={!searchResult || isLastPage()} onClick={goToNextPage} />
+                <Pagination.Last disabled={!searchResult || isLastPage()} onClick={goToLastPage} />
             </Pagination>
         </div>
     );
