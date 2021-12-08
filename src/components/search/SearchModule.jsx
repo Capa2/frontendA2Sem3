@@ -6,6 +6,7 @@ import SearchForm from "./SearchForm";
 import PaginationBar from "./PaginationBar";
 import ResultStatus from "./ResultStatus";
 import ResultLimiter from "./ResultLimiter";
+import { Row, Col } from "react-bootstrap";
 
 function SearchModule({ isLoggedIn }) {
     const [searchParams] = useSearchParams();
@@ -35,11 +36,15 @@ function SearchModule({ isLoggedIn }) {
 
     return (
         <>
-            <SearchForm query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} limit={limit} />
-            <ResultStatus searchResult={searchResult} />
-            <ResultLimiter query={query} filter={filter} limit={limit} setLimit={setLimit} />
-            <PaginationBar searchResult={searchResult} />
-            <SearchResults library={library} searchResult={searchResult} setSearchResult={setSearchResult} isLoggedIn={isLoggedIn} />
+            <Row>
+                <SearchForm query={query} setQuery={setQuery} filter={filter} setFilter={setFilter} limit={limit} />
+            </Row>
+            <Row>
+                <Col><ResultStatus searchResult={searchResult} /></Col>
+                <Col><PaginationBar searchResult={searchResult} /></Col>
+                <Col><ResultLimiter query={query} filter={filter} limit={limit} setLimit={setLimit} /></Col>
+            </Row>
+            <Row><SearchResults library={library} searchResult={searchResult} setSearchResult={setSearchResult} isLoggedIn={isLoggedIn} /></Row>
         </>
     );
 }
