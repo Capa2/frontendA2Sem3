@@ -52,6 +52,7 @@ function LibraryBtn({ singleKey, isLoggedIn, passedLibrary }) {
 
     return (
         <Button
+            variant={!exists ? "success" : "danger"}
             className="m-1"
             value={singleKey}
             disabled={!IsLoaded || !isLoggedIn}

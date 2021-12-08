@@ -35,7 +35,7 @@ function BookPage({ isLoggedIn }) {
                     </div>}
             </Col>
             <Col key={getKey()} lg="8" md="8" xs="12">
-                <Row key={getKey()}>
+                <Row className="mb-4" key={getKey()}>
                     <Col key={getKey()}>
                         <h1>{book.title}</h1>
                         {book.subtitle && <h4><small className="text-muted">{book.subtitle}</small></h4>}
@@ -49,16 +49,16 @@ function BookPage({ isLoggedIn }) {
                         <BackBtn />
                         <LibraryBtn singleKey={book.key} isLoggedIn={isLoggedIn} />
                     </Col>
-                    <Row key={getKey()}>
-                        <Col key={getKey()}>
-                            {book.descriptions.map(d => <p key={getKey()}>{d}</p>)}
-                        </Col>
-                    </Row>
-                    <Row key={getKey()}>
-                        <Col key={getKey()}>
-                            <p>{book.subjects.map((s, i) => [i > 0 && ", ", <a href="/" key={s.key}>{s.name}</a>])}</p>
-                        </Col>
-                    </Row>
+                </Row>
+                <Row className="mb-4" key={getKey()}>
+                    <Col key={getKey()}>
+                        {book.descriptions.map(d => <p key={getKey()}>{d}</p>)}
+                    </Col>
+                </Row>
+                <Row className="mb-4" key={getKey()}>
+                    <Col key={getKey()}>
+                        <p>{book.subjects.map((s, i) => [i > 0 && ", ", <a href="/" key={s.key}>{s.name}</a>])}</p>
+                    </Col>
                 </Row>
             </Col>
         </Row>

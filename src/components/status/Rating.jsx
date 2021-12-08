@@ -28,7 +28,7 @@ function Rating({ bookId, mounted, isLoggedIn }) {
     if (!isLoggedIn) return null;
 
     return (
-        <div className="W-100 my-3">
+        <div className="W-100 my-4">
             <Star key="0" index="0" rating={rating} callback={setRating} />
             <Star key="1" index="1" rating={rating} callback={setRating} />
             <Star key="2" index="2" rating={rating} callback={setRating} />

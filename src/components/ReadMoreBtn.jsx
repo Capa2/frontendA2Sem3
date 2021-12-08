@@ -10,7 +10,9 @@ function ReadMoreBtn({ singleKey }) {
     }
 
     return (
-        <Button className="m-1"
+        <Button
+            variant="secondary"
+            className="m-1"
             value={singleKey}
             onClick={go}
         >Read More
