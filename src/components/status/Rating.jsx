@@ -2,30 +2,21 @@ import { useEffect, useState } from "react";
 import Star from "./Star";
 import apiFacade from "../../apiFacade";
 
-function Rating({ bookId, mounted, isLoggedIn }) {
+function Rating({ bookId, mounted, isLoggedIn, inLibrary }) {
     const [rating, setRating] = useState();
-    const [libraryItem, setLibraryItem] = useState();
-    const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        if(isLoggedIn) apiFacade.getLibraryItem(bookId, setLibraryItem, mounted);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    useEffect(() => {
-        if (libraryItem) {
-            setRating(libraryItem.rating ? libraryItem.rating : 0);
-            setLoaded(true);
+        if (inLibrary) {
+            setRating(inLibrary.rating);
         }
-    }, [libraryItem]);
-
+    }, [inLibrary]);
 
     useEffect(() => {
-        if (loaded) apiFacade.editRating(bookId, rating, mounted);
+        if (inLibrary && rating != undefined) apiFacade.editRating(bookId, rating, mounted);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [rating]);
 
-    if (!isLoggedIn || !loaded) return null;
+    if (!isLoggedIn || !inLibrary) return null;
 
     return (
         <div className="W-100 my-4">

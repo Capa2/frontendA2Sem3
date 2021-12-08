@@ -2,10 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import apiFacade from "../apiFacade";
 
-function LibraryBtn({ singleKey, isLoggedIn, passedLibrary }) {
-    const [library, setLibrary] = useState(passedLibrary);
-    const [IsLoaded, setIsLoaded] = useState(false);
-    const [exists, setExists] = useState();
+function LibraryBtn({ singleKey, isLoggedIn, isLoaded, inLibrary }) {
+    const [exists, setExists] = useState(!!inLibrary);
     const mounted = useRef(true);
 
     useEffect(() => {
@@ -13,32 +11,8 @@ function LibraryBtn({ singleKey, isLoggedIn, passedLibrary }) {
     }, []);
 
     useEffect(() => {
-        if (!passedLibrary && isLoggedIn) {
-            apiFacade.fetchLibrary(setLibrary, mounted);
-        }
-        else {
-            setLibrary(passedLibrary);
-            setIsLoaded(true);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [passedLibrary]);
-
-    useEffect(() => {
-        if (!library || !singleKey) {
-            setIsLoaded(false);
-        } else {
-            for (var i = 0; i <= library.size; i++) { // note <= final loop set false
-                if (i === library.size) {
-                    setExists(false);
-                } else if (library.library[i].book.key === singleKey) {
-                    setExists(true);
-                    break;
-                }
-            }
-            setIsLoaded(true);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [library, singleKey]);
+        setExists(!!inLibrary);
+    }, [inLibrary]);
 
     function addToLibrary() {
         if (isLoggedIn) apiFacade.addToLibrary(singleKey, setExists, mounted);
@@ -55,7 +29,7 @@ function LibraryBtn({ singleKey, isLoggedIn, passedLibrary }) {
             variant={!exists ? "success" : "danger"}
             className="m-1"
             value={singleKey}
-            disabled={!IsLoaded || !isLoggedIn}
+            disabled={!isLoaded || !isLoggedIn}
             onClick={!exists ? addToLibrary : delFromLibrary}
         >{!IsLoaded ? "loading.." :
             !exists ? "save" : "unsave"}

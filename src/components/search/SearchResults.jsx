@@ -5,7 +5,7 @@ import apiFacade from "../../apiFacade";
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 
-function SearchResults({ library, searchResult, setSearchResult, isLoggedIn }) {
+function SearchResults({ searchResult, setSearchResult, isLoggedIn, library }) {
     const mounted = useRef(true);
     const [searchParams] = useSearchParams();
 
@@ -23,7 +23,7 @@ function SearchResults({ library, searchResult, setSearchResult, isLoggedIn }) {
     return (
         <>
             <ListGroup>
-                {searchResult.results.map(singleResult => <SingleResult library={library} key={singleResult.key} singleResult={singleResult} isLoggedIn={isLoggedIn} />)}
+                {searchResult.results.map(singleResult => <SingleResult key={singleResult.key} singleResult={singleResult} isLoggedIn={isLoggedIn} library={library} />)}
             </ListGroup>
         </>
     );

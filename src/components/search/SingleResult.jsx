@@ -1,10 +1,21 @@
 import { useNavigate } from "react-router";
 import { Image, ListGroup, Row, Col } from "react-bootstrap";
 import LibraryBtn from "../LibraryBtn";
+import { useEffect, useState } from "react";
 import ReadMoreBtn from "../ReadMoreBtn";
 
-function SingleResult({ singleResult, isLoggedIn }) {
+function SingleResult({ singleResult, isLoggedIn, library }) {
     const navigate = useNavigate();
+    const [inLibrary, setInLibrary] = useState();
+    const [isLoaded, setIsLoaded] = useState(false)
+
+    useEffect(() => {
+        if (library) {
+            setInLibrary(library.library.find(item => item.book.key === singleResult.key));
+            setIsLoaded(true);
+        }
+    }, [library, singleResult.key]);
+
     return (
 
         <Row className="mb-4">
@@ -30,7 +41,7 @@ function SingleResult({ singleResult, isLoggedIn }) {
                     </ListGroup.Item>
                     } < ListGroup.Item className="mb-0">
                         <ReadMoreBtn singleKey={singleResult.key} />
-                        <LibraryBtn singleKey={singleResult.key} isLoggedIn={isLoggedIn} />
+                        <LibraryBtn singleKey={singleResult.key} isLoggedIn={isLoggedIn} isLoaded={isLoaded} inLibrary={inLibrary} />
                     </ListGroup.Item>
                 </ListGroup>
             </Col>

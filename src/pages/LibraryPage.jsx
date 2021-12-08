@@ -1,16 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Image, Row, Col, ListGroup } from "react-bootstrap";
 import LibraryBtn from "../components/LibraryBtn";
-import apiFacade from "../apiFacade";
 import Rating from "../components/status/Rating";
 import Status from "../components/status/Status";
-export default function LibraryPage({ user }) {
-    const [library, setLibrary] = useState();
+
+export default function LibraryPage({ user, library }) {
     const navigate = useNavigate();
     const mounted = useRef(true);
     var genKey = 100;
     function getKey() { genKey += 5; return genKey; }
+
     function LibraryItem({ item }) {
         return (
             <Row className="my-2">
@@ -22,18 +22,18 @@ export default function LibraryPage({ user }) {
                         <h3>{item.book.title}</h3>
                         <p key={getKey()}>by: {item.book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
                         <p key={getKey()}>First published in: {item.book.first_publish_year}</p>
-                        <Status bookId={item.book.key} mounted={mounted} isLoggedIn={!!user} />
-                        <Rating bookId={item.book.key} mounted={mounted} isLoggedIn={!!user} />
-                        <LibraryBtn singleKey={item.book.key} isLoggedIn={!!user} passedLibrary={library} />
+                        <Status bookId={item.book.key} mounted={mounted} isLoggedIn={!!user} inLibrary={item} />
+                        <Rating bookId={item.book.key} mounted={mounted} isLoggedIn={!!user} inLibrary={item} />
+                        <LibraryBtn singleKey={item.book.key} isLoggedIn={!!user} isLoaded={true} inLibrary={item} />
                     </div>
                 </Col>
             </Row>
         )
     }
-    useEffect(() => {
-        apiFacade.fetchLibrary(setLibrary, mounted);
-        return () => mounted.current = false;
-    }, []);
+
+    if (!user) {
+        return <h1>Please login</h1>
+    }
 
     return (
         <div>

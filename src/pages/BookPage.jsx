@@ -6,8 +6,11 @@ import apiFacade from "../apiFacade";
 import LibraryBtn from "../components/LibraryBtn";
 import Status from "../components/status/Status";
 import BackBtn from "../components/BackBtn";
-function BookPage({ isLoggedIn }) {
+
+function BookPage({ isLoggedIn, library }) {
     const [book, setBook] = useState();
+    const [inLibrary, setInLibrary] = useState();
+    const [isLoaded, setIsLoaded] = useState(false)
     const { key } = useParams();
     const mounted = useRef(true);
     var genKey = 100;
@@ -17,6 +20,13 @@ function BookPage({ isLoggedIn }) {
         apiFacade.fetchBookDetails(key, setBook, mounted);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        if (library) {
+            setInLibrary(library.library.find(item => item.book.key === key));
+            setIsLoaded(true);
+        }
+    }, [library]);
 
     useEffect(() => {
         return () => mounted.current = false;
@@ -44,10 +54,10 @@ function BookPage({ isLoggedIn }) {
                         <p key={getKey()}>{book.number_of_pages_median} pages</p>
                         <p key={getKey()}>Released: {book.first_publish_year}</p>
                         <p key={getKey()}>{book.edition_name} {book.physical_format && `(${book.physical_format})`}</p>
-                        <Status bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} />
-                        <Rating bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} />
+                        <Status bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} inLibrary={inLibrary} />
+                        <Rating bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} inLibrary={inLibrary} />
                         <BackBtn />
-                        <LibraryBtn singleKey={book.key} isLoggedIn={isLoggedIn} />
+                        <LibraryBtn singleKey={book.key} isLoggedIn={isLoggedIn} isLoaded={isLoaded} inLibrary={inLibrary} />
                     </Col>
                 </Row>
                 <Row className="mb-4" key={getKey()}>
