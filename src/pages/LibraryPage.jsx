@@ -20,7 +20,7 @@ export default function LibraryPage({ user, library }) {
                         <p>by: {item.book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
                         <p>First published in: {item.book.first_publish_year}</p>
                         <Status bookId={item.book.key} mounted={mounted} isLoggedIn={!!user} inLibrary={item} />
-                        <Rating bookId={item.book.key} mounted={mounted} isLoggedIn={!!user} />
+                        <Rating bookId={item.book.key} mounted={mounted} isLoggedIn={!!user} inLibrary={item} />
                         <LibraryBtn bookId={item.book.key} isLoggedIn={!!user} isLoaded={true} inLibrary={item} />
                     </ListGroupItem>
                 </Col>

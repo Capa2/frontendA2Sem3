@@ -51,7 +51,7 @@ function BookPage({ isLoggedIn, library }) {
                         <p>Released: {book.first_publish_year}</p>
                         <p>{book.edition_name} {book.physical_format && `(${book.physical_format})`}</p>
                         <Status bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} inLibrary={inLibrary} />
-                        <Rating bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} />
+                        <Rating bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} inLibrary={inLibrary} />
                         <LibraryBtn bookId={book.key} isLoggedIn={isLoggedIn} isLoaded={isLoaded} inLibrary={inLibrary} />
                     </Col>
                     <Row>

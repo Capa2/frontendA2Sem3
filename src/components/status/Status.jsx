@@ -13,7 +13,7 @@ function Status({ bookId, mounted, isLoggedIn, inLibrary }) {
 
 
     useEffect(() => {
-        if (inLibrary) apiFacade.editStatus(bookId, status, mounted);
+        if (inLibrary && status) apiFacade.editStatus(bookId, status, mounted);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status]);
 
