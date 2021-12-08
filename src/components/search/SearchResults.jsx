@@ -18,16 +18,12 @@ function SearchResults({ searchResult, setSearchResult, isLoggedIn, library }) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchParams]);
 
-    function getLibraryItem(key) {
-        return library.library.find(item => item.book.key === key);
-    }
-
     if (!searchResult) return null;
 
     return (
         <>
             <ListGroup>
-                {searchResult.results.map(singleResult => <SingleResult key={singleResult.key} singleResult={singleResult} isLoggedIn={isLoggedIn} inLibrary={getLibraryItem(singleResult.key)} />)}
+                {searchResult.results.map(singleResult => <SingleResult key={singleResult.key} singleResult={singleResult} isLoggedIn={isLoggedIn} library={library} />)}
             </ListGroup>
         </>
     );

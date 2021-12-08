@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import apiFacade from "../../apiFacade";
 import SearchResults from "./SearchResults";
 import SearchForm from "./SearchForm";
 import PaginationBar from "./PaginationBar";
@@ -10,7 +9,6 @@ import { Row, Col } from "react-bootstrap";
 
 function SearchModule({ isLoggedIn, library }) {
     const [searchParams] = useSearchParams();
-    const mounted = useRef(true);
     const [searchResult, setSearchResult] = useState();
 
     const [query, setQuery] = useState(() => {

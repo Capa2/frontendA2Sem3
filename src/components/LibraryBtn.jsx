@@ -2,16 +2,17 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import apiFacade from "../apiFacade";
 
-function LibraryBtn({ bookId, isLoggedIn, inLibrary }) {
+function LibraryBtn({ bookId, isLoggedIn, isLoaded, inLibrary }) {
     const [exists, setExists] = useState(!!inLibrary);
     const mounted = useRef(true);
-    console.log(inLibrary);
-    console.log(exists);
+
+    useEffect(() => {
+        return () => mounted.current = false;
+    }, []);
 
     useEffect(() => {
         setExists(!!inLibrary);
-        return () => mounted.current = false;
-    }, []);
+    }, [inLibrary]);
 
     function addToLibrary() {
         if (isLoggedIn) apiFacade.addToLibrary(bookId, setExists, mounted);
@@ -24,8 +25,8 @@ function LibraryBtn({ bookId, isLoggedIn, inLibrary }) {
     if (!isLoggedIn) return null;
 
     return (
-        <Button value={bookId} disabled={!isLoggedIn} onClick={!exists ? addToLibrary : delFromLibrary}>
-            {!isLoggedIn ? "Login to save books" : !exists ? "Add to library" : "Delete from library"}
+        <Button value={bookId} disabled={!isLoggedIn || !isLoaded} onClick={!exists ? addToLibrary : delFromLibrary}>
+            {!isLoggedIn ? "Login to save books" : !isLoaded ? "Loading..." : !exists ? "Add to library" : "Delete from library"}
         </Button>
     );
 }
