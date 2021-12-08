@@ -31,7 +31,7 @@ function LibraryBtn({ singleKey, isLoggedIn, isLoaded, inLibrary }) {
             value={singleKey}
             disabled={!isLoaded || !isLoggedIn}
             onClick={!exists ? addToLibrary : delFromLibrary}
-        >{!IsLoaded ? "loading.." :
+        >{!isLoaded ? "loading.." :
             !exists ? "save" : "unsave"}
         </Button>
     );
