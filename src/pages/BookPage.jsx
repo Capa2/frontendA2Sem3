@@ -38,14 +38,14 @@ function BookPage({ isLoggedIn }) {
                         <h1>{book.title}</h1>
                         {book.subtitle && <h4><small className="text-muted">{book.subtitle}</small></h4>}
                         <h4><small className="text-muted">{book.series.map((s, i) => [i > 0 && ", ", s])}</small></h4>
-                        <p>By: {book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
-                        <p>{book.number_of_pages_median} pages</p>
-                        <p>Released: {book.first_publish_year}</p>
-                        <p>{book.edition_name} {book.physical_format && `(${book.physical_format})`}</p>
+                        <p key="p1">By: {book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
+                        <p key="p2">{book.number_of_pages_median} pages</p>
+                        <p key="p3">Released: {book.first_publish_year}</p>
+                        <p key="p4">{book.edition_name} {book.physical_format && `(${book.physical_format})`}</p>
                         <Status bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} />
                         <Rating bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} />
                         <BackBtn />
-                        <LibraryBtn bookId={book.key} isLoggedIn={isLoggedIn} />
+                        <LibraryBtn singleKey={book.key} isLoggedIn={isLoggedIn} />
                     </Col>
                     <Row>
                         <Col>

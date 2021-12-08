@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { Image, ListGroup, ListGroupItem, Row, Col } from "react-bootstrap";
+import { Image, ListGroup, Row, Col } from "react-bootstrap";
 import LibraryBtn from "../LibraryBtn";
 import ReadMoreBtn from "../ReadMoreBtn";
 

@@ -2,7 +2,7 @@ import { Button, Form, FormControl, FormSelect, InputGroup, FloatingLabel } from
 import { useSearchParams } from "react-router-dom";
 
 export default function SearchForm({query, setQuery, filter, setFilter, limit}) {
-	const [searchParams, setSearchParams] = useSearchParams();
+	const [, setSearchParams] = useSearchParams();
 
 	function handleSubmit(event) {
 		event.preventDefault();
