@@ -47,23 +47,20 @@ function PaginationBar({ searchResult }) {
     }
 
     function SinglePageBtn({ number, disabled }) {
-        return (
-            <>
-                {number !== page && number >= 1 && number <= lastPage &&
-                    <Pagination.Item disabled={disabled} onClick={goToPage}>{number}</Pagination.Item>
-                }
-                {number === page &&
-                    <Pagination.Item active>{number}</Pagination.Item>
-                }
-            </>
-        )
+        if (number === page) {
+            return <Pagination.Item active>{number}</Pagination.Item>;
+        }
+        else if (number >= 1 && number <= lastPage) {
+            return <Pagination.Item disabled={disabled} onClick={goToPage}>{number}</Pagination.Item>;
+        }
+        return null;
     }
 
     function NumberedPages() {
         return (
             <>
-                {page >= calcLastPage() && page > 5 && <SinglePageBtn disabled={!searchResult} number={page - 4} />}
-                {page >= calcLastPage() - 1 && page > 5 && <SinglePageBtn disabled={!searchResult} number={page - 3} />}
+                {page >= lastPage && page > 5 && <SinglePageBtn disabled={!searchResult} number={page - 4} />}
+                {page >= lastPage - 1 && page > 5 && <SinglePageBtn disabled={!searchResult} number={page - 3} />}
                 <SinglePageBtn disabled={!searchResult} number={page - 2} />
                 <SinglePageBtn disabled={!searchResult} number={page - 1} />
                 <SinglePageBtn disabled={!searchResult} number={page} />
