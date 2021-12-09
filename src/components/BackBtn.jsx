@@ -12,7 +12,7 @@ function BackBtn() {
         <Button variant="secondary" className="m-1"
             value={"back"}
             onClick={goBack}
-        >Back
+        >back
         </Button>
     );
 }

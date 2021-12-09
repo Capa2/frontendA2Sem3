@@ -15,7 +15,7 @@ function ReadMoreBtn({ singleKey }) {
             className="m-1"
             value={singleKey}
             onClick={go}
-        >Read More
+        >read more
         </Button>
     );
 }
