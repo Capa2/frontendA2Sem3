@@ -52,7 +52,6 @@ function BookPage({ isLoggedIn, library }) {
                         <h1>{book.title}</h1>
                         {book.subtitle && <h4><small className="text-muted">{book.subtitle}</small></h4>}
                         <h4><small className="text-muted">{book.series.map((s, i) => [i > 0 && ", ", s])}</small></h4>
-
                         {/*<a href="/" key={a.key}>{a.name}</a> this was in NavLinks place below*/}
                         <p key={getKey()}>By: {book.authors.map((a, i) => [i > 0 && ", ", <NavLink to={`/?query=${a.name}&filter=author&limit=15`} end>{a.name}</NavLink> ])}</p>
                         <p key={getKey()}>{book.number_of_pages_median} pages</p>

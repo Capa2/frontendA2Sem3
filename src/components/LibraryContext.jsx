@@ -8,8 +8,14 @@ function LibraryProvider({ isLoggedIn, children }) {
     const mounted = useRef(true);
     const [library, setLibrary] = useState();
 
-    useEffect(() => {
+    function fetch() {
         if (isLoggedIn) apiFacade.fetchLibrary(setLibrary, mounted);
+        else setLibrary(null);
+        setTimeout(fetch, 1000 * 60 * 60 * 1); // 1 hour
+    }
+
+    useEffect(() => {
+        fetch();
         return () => mounted.current = false;
     }, [isLoggedIn]);
 
