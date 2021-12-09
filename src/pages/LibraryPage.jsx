@@ -4,6 +4,7 @@ import { Image, Row, Col, ListGroup } from "react-bootstrap";
 import LibraryBtn from "../components/LibraryBtn";
 import Rating from "../components/status/Rating";
 import Status from "../components/status/Status";
+import { NavLink } from "react-router-dom";
 
 export default function LibraryPage({ user, library }) {
     const navigate = useNavigate();
@@ -20,7 +21,8 @@ export default function LibraryPage({ user, library }) {
                 <Col key={getKey()} xs={7} md={8} lg={9}>
                     <div key={getKey()} className="h-100">
                         <h3>{item.book.title}</h3>
-                        <p key={getKey()}>by: {item.book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
+                        {/*<a href="/" key={a.key}>{a.name}</a> this was in NavLinks place below*/}
+                        <p key={getKey()}>by: {item.book.authors.map((a, i) => [i > 0 && ", ", <NavLink to={`/?query=${a.name}&filter=author&limit=15`} end>{a.name}</NavLink>])}</p>
                         <p key={getKey()}>First published in: {item.book.first_publish_year}</p>
                         <Status bookId={item.book.key} mounted={mounted} isLoggedIn={!!user} inLibrary={item} />
                         <Rating bookId={item.book.key} mounted={mounted} isLoggedIn={!!user} inLibrary={item} />
