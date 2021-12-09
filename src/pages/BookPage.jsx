@@ -1,18 +1,20 @@
 import { Row, Col, Image } from "react-bootstrap";
 import { useEffect, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Rating from "../components/status/Rating";
 import apiFacade from "../apiFacade";
 import LibraryBtn from "../components/LibraryBtn";
 import Status from "../components/status/Status";
 import BackBtn from "../components/BackBtn";
+import { NavLink } from "react-router-dom";
 
 function BookPage({ isLoggedIn, library }) {
     const [book, setBook] = useState();
     const [inLibrary, setInLibrary] = useState();
-    const [isLoaded, setIsLoaded] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false);
     const { key } = useParams();
     const mounted = useRef(true);
+    const navigate = useNavigate();
     var genKey = 100;
     function getKey() { genKey += 5; return genKey; }
 
@@ -50,7 +52,8 @@ function BookPage({ isLoggedIn, library }) {
                         <h1>{book.title}</h1>
                         {book.subtitle && <h4><small className="text-muted">{book.subtitle}</small></h4>}
                         <h4><small className="text-muted">{book.series.map((s, i) => [i > 0 && ", ", s])}</small></h4>
-                        <p key={getKey()}>By: {book.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</p>
+                        {/*<a href="/" key={a.key}>{a.name}</a> this was in NavLinks place below*/}
+                        <p key={getKey()}>By: {book.authors.map((a, i) => [i > 0 && ", ", <NavLink to={`/?query=${a.name}&filter=author&limit=15`} end>{a.name}</NavLink> ])}</p>
                         <p key={getKey()}>{book.number_of_pages_median} pages</p>
                         <p key={getKey()}>Released: {book.first_publish_year}</p>
                         <p key={getKey()}>{book.edition_name} {book.physical_format && `(${book.physical_format})`}</p>
