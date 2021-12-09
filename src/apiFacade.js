@@ -13,11 +13,8 @@ function fetchUserPage(setContent, mounted) {
     fetchData(`${SERVER_URL}/api/info/user`, "GET", setContent, mounted, true);
 }
 
-function addToLibrary(key, setExists, mounted) {
-    function added() {
-        setExists(true); // TODO: validate add to library
-    }
-    fetchData(`${SERVER_URL}/api/library/add/${key}`, "POST", added, mounted, true);
+function addToLibrary(key, callback, mounted) {
+    fetchData(`${SERVER_URL}/api/library/add/${key}`, "POST", callback, mounted, true);
 
 }
 
@@ -25,25 +22,16 @@ function getLibraryItem(key, setItem, mounted) {
     fetchData(`${SERVER_URL}/api/library/get/${key}`, "GET", setItem, mounted, true);
 }
 
-function editRating(key, rating, mounted) {
-    function tellMe(res) {
-        //console.log({ res }); // TODO: validate
-    }
-    fetchData(`${SERVER_URL}/api/library/edit/${key}/rating/${rating}`, "PUT", tellMe, mounted, true);
+function editRating(key, rating, callback, mounted) {
+    fetchData(`${SERVER_URL}/api/library/edit/${key}/rating/${rating}`, "PUT", callback, mounted, true);
 }
 
-function editStatus(key, status, mounted) {
-    function tellMe(res) {
-        //console.log({ res }); // TODO: validate
-    }
-    fetchData(`${SERVER_URL}/api/library/edit/${key}/status/${status}`, "PUT", tellMe, mounted, true);
+function editStatus(key, status, callback, mounted) {
+    fetchData(`${SERVER_URL}/api/library/edit/${key}/status/${status}`, "PUT", callback, mounted, true);
 }
 
-function delFromLibrary(key, setExists, mounted) {
-    function tellMe() {
-        setExists(false); // TODO: validate delete from library
-    }
-    fetchData(`${SERVER_URL}/api/library/delete/${key}`, "DELETE", tellMe, mounted, true);
+function delFromLibrary(key, callback, mounted) {
+    fetchData(`${SERVER_URL}/api/library/delete/${key}`, "DELETE", callback, mounted, true);
 }
 
 

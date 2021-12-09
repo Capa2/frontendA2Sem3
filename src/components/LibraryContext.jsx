@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { createContext, useState, useRef } from 'react';
 import apiFacade from '../apiFacade';
 
-const LibraryContext = createContext(null);
+const LibraryContext = createContext();
 
 function LibraryProvider({ isLoggedIn, children }) {
     const mounted = useRef(true);
@@ -19,7 +19,7 @@ function LibraryProvider({ isLoggedIn, children }) {
         return () => mounted.current = false;
     }, [isLoggedIn]);
 
-    return <LibraryContext.Provider value={library}>{children}</LibraryContext.Provider>
+    return <LibraryContext.Provider value={[library, setLibrary]}>{children}</LibraryContext.Provider>
 }
 
 export { LibraryContext, LibraryProvider };

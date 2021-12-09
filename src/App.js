@@ -1,5 +1,5 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext, createContext } from "react";
 import { Container } from "react-bootstrap";
 import userFacade from "./auth/userFacade";
 import apiFacade from "./apiFacade";
@@ -15,9 +15,11 @@ import LoginPage from "./pages/LoginPage";
 import LogoutPage from "./pages/LogoutPage";
 import BookPage from "./pages/BookPage";
 import SignupPage from "./pages/SignupPage";
-import { LibraryContext, LibraryProvider } from "./components/LibraryContext";
+
+export const LibraryContext = createContext();
 
 export default function App() {
+
   const navigate = useNavigate();
   const { login, logout, loggedIn, getUser } = userFacade();
   const [loggedInState, setLoggedInState] = useState(loggedIn());
@@ -64,7 +66,7 @@ export default function App() {
       <Hero />
       <NavBar loggedIn={loggedInState} user={userState} />
       <Container className="pageContent pt-3 pb-3" fluid="sm">
-        <LibraryProvider isLoggedIn={loggedInState} >
+        <LibraryContext.Provider value={[library, setLibrary]} >
           <Routes>
             <Route path="/*" element={<HomePage isLoggedIn={loggedInState} library={library} />} />
             <Route path="/library" element={<LibraryPage user={userState} library={library} />} />
@@ -76,7 +78,7 @@ export default function App() {
             <Route path="/book/:key" element={<BookPage isLoggedIn={loggedInState} library={library} />} />
             <Route path="*" element={<NoMatchPage />} />
           </Routes>
-        </LibraryProvider>
+        </LibraryContext.Provider>
       </Container>
     </Container>
   );

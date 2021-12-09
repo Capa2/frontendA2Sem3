@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
 import Star from "./Star";
 import apiFacade from "../../apiFacade";
+import { useContext } from "react";
+import { LibraryContext } from "../../App";
 
 function Rating({ bookId, mounted, isLoggedIn, inLibrary }) {
-    const [rating, setRating] = useState();
+    const [library, setLibrary] = useContext(LibraryContext);
+    const [rating, setRating] = useState(inLibrary.rating);
 
-    useEffect(() => {
-        if (inLibrary) {
-            setRating(inLibrary.rating);
-        }
-    }, [inLibrary]);
+    // useEffect(() => {
+    //     if (inLibrary) {
+    //         setRating(inLibrary.rating);
+    //     }
+    // }, [inLibrary]);
 
     useEffect(() => {
         if (inLibrary && rating != undefined) {
-            apiFacade.editRating(bookId, rating, mounted);
-            inLibrary.rating = rating;
-            // this assumes things go well
+            apiFacade.editRating(bookId, rating, () => {
+                apiFacade.fetchLibrary(setLibrary, mounted);
+            }, mounted);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [rating]);

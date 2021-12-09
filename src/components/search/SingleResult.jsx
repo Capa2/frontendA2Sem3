@@ -3,11 +3,14 @@ import { Image, ListGroup, Row, Col } from "react-bootstrap";
 import LibraryBtn from "../LibraryBtn";
 import { useEffect, useState } from "react";
 import ReadMoreBtn from "../ReadMoreBtn";
+import { useContext } from "react";
+import { LibraryContext } from "../../App";
 
-function SingleResult({ singleResult, isLoggedIn, library }) {
+function SingleResult({ singleResult, isLoggedIn }) {
+    const [library, setLibrary] = useContext(LibraryContext);
     const navigate = useNavigate();
     const [inLibrary, setInLibrary] = useState();
-    const [isLoaded, setIsLoaded] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
         if (library) {

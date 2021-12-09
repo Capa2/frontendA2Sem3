@@ -7,8 +7,11 @@ import LibraryBtn from "../components/LibraryBtn";
 import Status from "../components/status/Status";
 import BackBtn from "../components/BackBtn";
 import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { LibraryContext } from "../App";
 
-function BookPage({ isLoggedIn, library }) {
+function BookPage({ isLoggedIn }) {
+    const [library, setLibrary] = useContext(LibraryContext);
     const [book, setBook] = useState();
     const [inLibrary, setInLibrary] = useState();
     const [isLoaded, setIsLoaded] = useState(false);
@@ -53,12 +56,14 @@ function BookPage({ isLoggedIn, library }) {
                         {book.subtitle && <h4><small className="text-muted">{book.subtitle}</small></h4>}
                         <h4><small className="text-muted">{book.series.map((s, i) => [i > 0 && ", ", s])}</small></h4>
                         {/*<a href="/" key={a.key}>{a.name}</a> this was in NavLinks place below*/}
-                        <p key={getKey()}>By: {book.authors.map((a, i) => [i > 0 && ", ", <NavLink to={`/?query=${a.name}&filter=author&limit=15`} end>{a.name}</NavLink> ])}</p>
+                        <p key={getKey()}>By: {book.authors.map((a, i) => [i > 0 && ", ", <NavLink to={`/?query=${a.name}&filter=author&limit=15`} end>{a.name}</NavLink>])}</p>
                         <p key={getKey()}>{book.number_of_pages_median} pages</p>
                         <p key={getKey()}>Released: {book.first_publish_year}</p>
                         <p key={getKey()}>{book.edition_name} {book.physical_format && `(${book.physical_format})`}</p>
-                        <Status bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} inLibrary={inLibrary} />
-                        <Rating bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} inLibrary={inLibrary} />
+                        {inLibrary && <div>
+                            <Status bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} inLibrary={inLibrary} />
+                            <Rating bookId={key} mounted={mounted} isLoggedIn={isLoggedIn} inLibrary={inLibrary} />
+                        </div>}
                         <BackBtn />
                         <LibraryBtn singleKey={book.key} isLoggedIn={isLoggedIn} isLoaded={isLoaded} inLibrary={inLibrary} />
                     </Col>

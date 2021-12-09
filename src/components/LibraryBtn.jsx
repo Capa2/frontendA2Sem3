@@ -1,25 +1,33 @@
+import { useContext } from "react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "react-bootstrap";
 import apiFacade from "../apiFacade";
+import { LibraryContext } from "../App";
 
 function LibraryBtn({ singleKey, isLoggedIn, isLoaded, inLibrary }) {
+    const [library, setLibrary] = useContext(LibraryContext);
     const [exists, setExists] = useState(!!inLibrary);
     const mounted = useRef(true);
-
-    useEffect(() => {
-        return () => mounted.current = false;
-    }, []);
 
     useEffect(() => {
         setExists(!!inLibrary);
     }, [inLibrary]);
 
     function addToLibrary() {
-        if (isLoggedIn) apiFacade.addToLibrary(singleKey, setExists, mounted);
+        if (isLoggedIn) {
+            apiFacade.addToLibrary(singleKey, () => {
+                apiFacade.fetchLibrary(setLibrary, mounted);
+            }, mounted);
+        }
     }
 
     function delFromLibrary() {
-        if (isLoggedIn) apiFacade.delFromLibrary(singleKey, setExists, mounted);
+        if (isLoggedIn) {
+            apiFacade.delFromLibrary(singleKey, () => {
+                // setLibrary({ ...library, "library": library.library.filter(item => item.book.key !== singleKey) });
+                apiFacade.fetchLibrary(setLibrary, mounted);
+            }, mounted);
+        }
     }
 
     if (!isLoggedIn) return null;

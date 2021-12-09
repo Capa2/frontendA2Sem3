@@ -1,22 +1,24 @@
+import { useContext } from "react";
 import { useEffect, useState } from "react";
 import { FormSelect } from "react-bootstrap";
 import apiFacade from "../../apiFacade";
+import { LibraryContext } from "../../App";
 
 function Status({ bookId, mounted, isLoggedIn, inLibrary }) {
-    const [status, setStatus] = useState();
+    const [library, setLibrary] = useContext(LibraryContext);
+    const [status, setStatus] = useState(inLibrary.status);
+
+    // useEffect(() => {
+    //     if (inLibrary) {
+    //         setStatus(inLibrary.status);
+    //     }
+    // }, [inLibrary]);
 
     useEffect(() => {
-        if (inLibrary) {
-            setStatus(inLibrary.status);
-        }
-    }, [inLibrary]);
-
-
-    useEffect(() => {
-        if (inLibrary && status) {
-            apiFacade.editStatus(bookId, status, mounted);
-            inLibrary.status = status;
-            // this assumes things go well
+        if (inLibrary && status && status !== inLibrary.status) {
+            apiFacade.editStatus(bookId, status, () => {
+                apiFacade.fetchLibrary(setLibrary, mounted);
+            }, mounted);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status]);
