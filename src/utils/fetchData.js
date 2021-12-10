@@ -9,7 +9,7 @@ function fetchData(url, method, callback, mounted, addToken, body) {
         if (mounted.current) {
             callback(data)
         }
-    });
+    }); // catch
 }
 
 export default fetchData;
