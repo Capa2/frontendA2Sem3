@@ -30,7 +30,9 @@ function SingleResult({ singleResult, isLoggedIn }) {
                     <ListGroup.Item className="mb-0" as="h3">{singleResult.title}</ListGroup.Item>
                     <ListGroup.Item className="mb-0">
                         <Row>
-                            {singleResult.authors.length > 0 && <Col sm="12" lg>{singleResult.authors.length > 1 ? "Authors" : "Author"}: {singleResult.authors.map((a, i) => [i > 0 && ", ", <a href="/" key={a.key}>{a.name}</a>])}</Col>}
+                            {singleResult.authors.length > 0 && <Col sm="12" lg>{singleResult.authors.length > 1 ? "Authors" : "Author"}: {singleResult.authors.map((a, i) => [i > 0 && ", ", 
+                            //<a href="/" key={a.key}>{a.name}</a>
+                            <NavLink to={`/?query=${a.name}&filter=author&limit=15`} end>{a.name}</NavLink>])}</Col>}
                             {singleResult.number_of_pages_median !== 0 && <Col sm="12" lg>{singleResult.number_of_pages_median} pages</Col>}
                             {singleResult.first_publish_year > 0 && <Col sm="12" lg>Published: {singleResult.first_publish_year}</Col>}
                         </Row>
