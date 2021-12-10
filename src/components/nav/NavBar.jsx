@@ -8,6 +8,7 @@ export default function NavBar({ loggedIn, user }) {
     return (
         <ul className="navBar">
             <NavItem to="/" text="Search" />
+            <NavItem to="/bestsellers" text="NYT Bestsellers" />
             <PrivateNavItem to="/library" text="library" allowedRole="user" user={user} />
             <PrivateNavItem to="admin" text="Admin page" allowedRole="admin" user={user} />
             <NavItem to="/about" text="About" />

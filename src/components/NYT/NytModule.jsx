@@ -7,6 +7,8 @@ function NYT({ isLoggedIn }) {
     const [listSelect, setListSelect] = useState();
     const [list, setList] = useState();
     const mounted = useRef(true);
+    var genKey = 100;
+    function getKey() { genKey += 5; return genKey; }
 
     useEffect(() => {
         // TODO: fetch list and set with SetList();
@@ -21,9 +23,9 @@ function NYT({ isLoggedIn }) {
 
     return (
         <>
-            <Row className="mt-4">
-                <Col xs="12" md><h3 >New York Times Bestsellers</h3></Col>
-                <Col xs="12" md><FormSelect
+            <Row key={getKey()} className="mt-4">
+                <Col key={getKey()} xs="12" md ><h3 >New York Times Bestsellers</h3></Col>
+                <Col key={getKey()} xs="12" md ><FormSelect
                     name="list"
                     value={listSelect}
                     aria-label="nyt bestseller list select"
@@ -38,7 +40,7 @@ function NYT({ isLoggedIn }) {
                     <option value="graphic-books-and-manga">Graphic and manga</option>
                 </FormSelect></Col>
             </Row>
-            {list && <Row>
+            {list && <Row key={getKey()}>
                 <ListGroup>
                 {list.books.map(book => <ListGroup.Item key={book.primary_isbn13}> <Bestseller  key={book.primary_isbn13} book={book} /></ListGroup.Item>)}
             </ListGroup>

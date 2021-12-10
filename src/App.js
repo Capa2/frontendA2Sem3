@@ -15,6 +15,7 @@ import LoginPage from "./pages/LoginPage";
 import LogoutPage from "./pages/LogoutPage";
 import BookPage from "./pages/BookPage";
 import SignupPage from "./pages/SignupPage";
+import BestsellerPage from "./pages/BestsellerPage";
 
 export const LibraryContext = createContext();
 
@@ -72,6 +73,7 @@ export default function App() {
             <Route path="/library" element={<LibraryPage user={userState} library={library} />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/bestsellers" element={<BestsellerPage />} />
             <Route path="/login" element={<LoginPage login={loginProtocol} />} />
             <Route path="/logout" element={<LogoutPage logout={logoutProtocol} />} />
             <Route path="/signup" element={<SignupPage />} />
