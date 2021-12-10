@@ -1,6 +1,10 @@
 import { SERVER_URL } from "./settings";
 import fetchData from "./utils/fetchData";
 
+function fetchBestList(list, setListResults, mounted) {
+    fetchData(`${SERVER_URL}/api/nyt/list/${list}`, "GET", setListResults, mounted);
+}
+
 function fetchSearchResults(query, setSearchResults, mounted) {
     fetchData(`${SERVER_URL}/api/search/${query}`, "GET", setSearchResults, mounted);
 }
@@ -44,6 +48,7 @@ function fetchAdminPage(setContent, mounted) {
 }
 
 const apiFacade = {
+    fetchBestList,
     fetchSearchResults,
     fetchBookDetails,
     fetchUserPage,
