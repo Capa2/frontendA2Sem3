@@ -15,7 +15,7 @@ function Rating({ bookId, mounted, isLoggedIn, inLibrary }) {
     // }, [inLibrary]);
 
     useEffect(() => {
-        if (inLibrary && rating != undefined) {
+        if (inLibrary && rating != undefined && rating !== inLibrary.rating) {
             apiFacade.editRating(bookId, rating, () => {
                 apiFacade.fetchLibrary(setLibrary, mounted);
             }, mounted);
