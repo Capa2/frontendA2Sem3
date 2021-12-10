@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { LibraryContext } from "../App";
 import SearchModule from "../components/search/SearchModule";
-import NYT from "../components/NYT";
+import NYT from "../components/NYT/NytModule";
 
 export default function Home({ isLoggedIn }) {
 	const [library] = useContext(LibraryContext);
