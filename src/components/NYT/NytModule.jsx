@@ -19,8 +19,8 @@ function NYT({ isLoggedIn }) {
     return (
         <>
             <Row className="mt-4">
-                <Col xs={12} md><h3 >New York Times Bestsellers</h3></Col>
-                <Col xs={12} md><FormSelect
+                <Col xs="12" md><h3 >New York Times Bestsellers</h3></Col>
+                <Col xs="12" md><FormSelect
                     name="list"
                     value={listSelect}
                     aria-label="nyt bestseller list select"
